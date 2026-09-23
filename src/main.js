@@ -244,12 +244,6 @@ function setupHardwareCanvasStages() {
     folder: 'resistor',
     frameCount: 192,
     pinDistance: 2600,
-    hudRules: [
-      { id: 'hud-res-shell', start: 0.12, end: 0.85 },
-      { id: 'hud-res-caps', start: 0.28, end: 0.88 },
-      { id: 'hud-res-helix', start: 0.44, end: 0.95 },
-      { id: 'hud-res-core', start: 0.60, end: 1.00 },
-    ],
   });
 
   // Component 2: Inductor (192 frames)
@@ -261,11 +255,6 @@ function setupHardwareCanvasStages() {
     folder: 'inductor',
     frameCount: 192,
     pinDistance: 2600,
-    hudRules: [
-      { id: 'hud-ind-coil', start: 0.18, end: 0.85 },
-      { id: 'hud-ind-flux', start: 0.35, end: 0.92 },
-      { id: 'hud-ind-core', start: 0.52, end: 1.00 },
-    ],
   });
 
   // Component 3: Capacitor (240 frames)
@@ -277,11 +266,6 @@ function setupHardwareCanvasStages() {
     folder: 'capacitor',
     frameCount: 240,
     pinDistance: 2600,
-    hudRules: [
-      { id: 'hud-cap-casing', start: 0.16, end: 0.82 },
-      { id: 'hud-cap-foils', start: 0.38, end: 0.95 },
-      { id: 'hud-cap-terminals', start: 0.58, end: 1.00 },
-    ],
   });
 }
 
