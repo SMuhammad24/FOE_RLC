@@ -1,1259 +1,1412 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RLC Components — Interactive 3D Presentation | Resistor, Inductor, Capacitor</title>
-    <meta name="description" content="Interactive full-screen scroll-bound 3D hardware presentation for electrical engineering: Resistor, Inductor, and Capacitor." />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body class="tech-grid-bg text-[#0f172a] antialiased selection:bg-sky-300 selection:text-sky-950">
 
-    <!-- Global Apple-Style Navigation Bar -->
-    <header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3.5 flex items-center justify-between pointer-events-auto backdrop-blur-md bg-white/50 border-b border-sky-200/60 shadow-[0_4px_20px_-4px_rgba(2,132,199,0.06)]">
-      <div class="flex items-center gap-3 apple-notif-pill px-3.5 py-1.5 border border-sky-200/60 shadow-sm">
-        <div class="flex flex-col">
-          <span class="font-mono text-xs uppercase tracking-widest text-[#0f172a] font-bold">RLC 3D Presentation</span>
-          <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">Fundamentals of Electrical Engineering</span>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RLC Components — Interactive 3D Presentation | Resistor, Inductor, Capacitor</title>
+  <meta name="description"
+    content="Interactive full-screen scroll-bound 3D hardware presentation for electrical engineering: Resistor, Inductor, and Capacitor." />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="tech-grid-bg text-[#0f172a] antialiased selection:bg-sky-300 selection:text-sky-950">
+
+  <!-- Global Apple-Style Navigation Bar -->
+  <header
+    class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3.5 flex items-center justify-between pointer-events-auto backdrop-blur-md bg-white/50 border-b border-sky-200/60 shadow-[0_4px_20px_-4px_rgba(2,132,199,0.06)]">
+    <div class="flex items-center gap-3 apple-notif-pill px-3.5 py-1.5 border border-sky-200/60 shadow-sm">
+      <div class="flex flex-col">
+        <span class="font-mono text-xs uppercase tracking-widest text-[#0f172a] font-bold">RLC 3D Presentation</span>
+        <span class="text-[10px] text-slate-500 font-mono hidden sm:inline">Fundamentals of Electrical
+          Engineering</span>
+      </div>
+    </div>
+
+    <!-- Center: Section Navigation Jump Links -->
+    <nav class="hidden lg:flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 shadow-sm">
+      <button data-jump="hero"
+        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Overview</button>
+      <button data-jump="track-resistor"
+        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-amber-700 hover:bg-amber-50 rounded-full transition">Resistor</button>
+      <button data-jump="track-inductor"
+        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Inductor</button>
+      <button data-jump="track-capacitor"
+        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-purple-700 hover:bg-purple-50 rounded-full transition">Capacitor</button>
+      <button data-jump="slide-summary"
+        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition">RLC
+        Matrix</button>
+    </nav>
+
+    <!-- Right: Presentation Mode Suite (Timer, Fullscreen, Print) -->
+    <div class="flex items-center gap-2">
+      <!-- Live Presentation Stopwatch Timer -->
+      <div
+        class="flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 text-xs font-mono shadow-sm">
+        <span id="timer-display" class="font-bold text-[#0f172a]">00:00</span>
+        <button id="btn-timer-toggle" title="Start/Pause Timer"
+          class="px-1.5 py-0.5 rounded text-[10px] bg-sky-100 hover:bg-sky-200 text-slate-700 font-sans transition">▶</button>
+        <button id="btn-timer-reset" title="Reset Timer"
+          class="px-1.5 py-0.5 rounded text-[10px] bg-sky-100 hover:bg-sky-200 text-slate-700 font-sans transition">↺</button>
       </div>
 
-      <!-- Center: Section Navigation Jump Links -->
-      <nav class="hidden lg:flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 shadow-sm">
-        <button data-jump="hero" class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Overview</button>
-        <button data-jump="track-resistor" class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-amber-700 hover:bg-amber-50 rounded-full transition">Resistor</button>
-        <button data-jump="track-inductor" class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Inductor</button>
-        <button data-jump="track-capacitor" class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-purple-700 hover:bg-purple-50 rounded-full transition">Capacitor</button>
-        <button data-jump="slide-summary" class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition">RLC Matrix</button>
-      </nav>
+      <!-- Fullscreen Button -->
+      <button id="btn-fullscreen" title="Toggle Fullscreen (F)"
+        class="hidden sm:inline-flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 text-xs font-semibold text-slate-700 hover:bg-sky-50 shadow-sm transition">
+        <span>Fullscreen</span>
+        <kbd class="text-[10px] font-mono bg-sky-100/80 px-1 rounded border border-sky-200">F</kbd>
+      </button>
 
-      <!-- Right: Presentation Mode Suite (Timer, Fullscreen, Print) -->
-      <div class="flex items-center gap-2">
-        <!-- Live Presentation Stopwatch Timer -->
-        <div class="flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 text-xs font-mono shadow-sm">
-          <span id="timer-display" class="font-bold text-[#0f172a]">00:00</span>
-          <button id="btn-timer-toggle" title="Start/Pause Timer" class="px-1.5 py-0.5 rounded text-[10px] bg-sky-100 hover:bg-sky-200 text-slate-700 font-sans transition">▶</button>
-          <button id="btn-timer-reset" title="Reset Timer" class="px-1.5 py-0.5 rounded text-[10px] bg-sky-100 hover:bg-sky-200 text-slate-700 font-sans transition">↺</button>
-        </div>
+      <!-- Print Cheat Sheet Button -->
+      <button id="btn-print" title="Print 1-Page Summary Cheat Sheet"
+        class="inline-flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 text-xs font-semibold text-slate-700 hover:bg-sky-50 shadow-sm transition">
+        <span>Cheat Sheet</span>
+      </button>
+    </div>
+  </header>
 
-        <!-- Fullscreen Button -->
-        <button id="btn-fullscreen" title="Toggle Fullscreen (F)" class="hidden sm:inline-flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 text-xs font-semibold text-slate-700 hover:bg-sky-50 shadow-sm transition">
-          <span>Fullscreen</span>
-          <kbd class="text-[10px] font-mono bg-sky-100/80 px-1 rounded border border-sky-200">F</kbd>
-        </button>
+  <!-- MAIN PRESENTATION JOURNEY -->
+  <main class="relative z-10 w-full">
 
-        <!-- Print Cheat Sheet Button -->
-        <button id="btn-print" title="Print 1-Page Summary Cheat Sheet" class="inline-flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 text-xs font-semibold text-slate-700 hover:bg-sky-50 shadow-sm transition">
-          <span>Cheat Sheet</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- MAIN PRESENTATION JOURNEY -->
-    <main class="relative z-10 w-full">
-
-      <!-- ===================================================================
+    <!-- ===================================================================
            HERO SECTION: OVERVIEW
            =================================================================== -->
-      <section id="hero" class="min-h-screen w-full flex flex-col justify-center items-center px-6 text-center pt-24 pb-16 relative">
-        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full apple-notif-pill border border-sky-500/25 text-sky-700 text-xs font-mono mb-6 uppercase tracking-widest bg-sky-50/60 shadow-sm">
-          <div class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
-          <span>Engineering Presentation</span>
-          <span class="text-slate-400">•</span>
-          <span>Interactive 3D Hardware Anatomy</span>
+    <section id="hero"
+      class="min-h-screen w-full flex flex-col justify-center items-center px-6 text-center pt-24 pb-16 relative">
+      <div
+        class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full apple-notif-pill border border-sky-500/25 text-sky-700 text-xs font-mono mb-6 uppercase tracking-widest bg-sky-50/60 shadow-sm">
+        <div class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
+        <span>Engineering Presentation</span>
+        <span class="text-slate-400">•</span>
+        <span>Interactive 3D Hardware Anatomy</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight max-w-5xl leading-tight text-[#1d1d1f]">
+        PASSIVE CIRCUIT
+        <span class="block bg-gradient-to-r from-amber-600 via-sky-600 to-purple-600 bg-clip-text text-transparent">
+          RLC ARCHITECTURE
+        </span>
+      </h1>
+
+      <p class="mt-6 text-[#515154] max-w-2xl text-base sm:text-lg leading-relaxed">
+        An interactive, scroll-bound physical dissection of the three cornerstone passive elements of electrical
+        engineering:
+        <span class="text-amber-600 font-bold">Resistor</span>,
+        <span class="text-sky-600 font-bold">Inductor</span>, and
+        <span class="text-purple-600 font-bold">Capacitor</span>.
+      </p>
+
+      <!-- Component Highlights Cards as Apple Notification Banners -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl w-full mt-12 text-left">
+        <div class="apple-notif-card !max-w-none border-amber-500/30 cursor-pointer group" data-jump="track-resistor">
+          <div class="apple-notif-header">
+            <div class="apple-notif-app">
+              <span class="apple-app-name text-amber-600">01 / Resistor</span>
+            </div>
+            <span class="apple-notif-time">DISSECT</span>
+          </div>
+          <h3 class="apple-notif-title text-base group-hover:text-amber-700 transition">Carbon Film Resistor</h3>
+          <p class="apple-notif-desc">Scroll locks to disassemble into ceramic core, carbon film helix, and nickel end
+            caps.</p>
+          <div class="mt-3 text-xs font-mono text-amber-600 flex items-center gap-1 font-semibold">
+            <span>Scroll to Disassemble</span> →
+          </div>
         </div>
 
-        <h1 class="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight max-w-5xl leading-tight text-[#1d1d1f]">
-          PASSIVE CIRCUIT
-          <span class="block bg-gradient-to-r from-amber-600 via-sky-600 to-purple-600 bg-clip-text text-transparent">
-            RLC ARCHITECTURE
-          </span>
-        </h1>
+        <div class="apple-notif-card !max-w-none border-sky-500/30 cursor-pointer group" data-jump="track-inductor">
+          <div class="apple-notif-header">
+            <div class="apple-notif-app">
+              <span class="apple-app-name text-sky-600">02 / Inductor</span>
+            </div>
+            <span class="apple-notif-time">DISSECT</span>
+          </div>
+          <h3 class="apple-notif-title text-base group-hover:text-sky-700 transition">Copper Wire Inductor</h3>
+          <p class="apple-notif-desc">Scroll locks as copper coil uncoils with glowing blue energy flux lines exposing
+            iron core.</p>
+          <div class="mt-3 text-xs font-mono text-sky-600 flex items-center gap-1 font-semibold">
+            <span>Scroll to Uncoil</span> →
+          </div>
+        </div>
 
-        <p class="mt-6 text-[#515154] max-w-2xl text-base sm:text-lg leading-relaxed">
-          An interactive, scroll-bound physical dissection of the three cornerstone passive elements of electrical engineering:
-          <span class="text-amber-600 font-bold">Resistor</span>,
-          <span class="text-sky-600 font-bold">Inductor</span>, and
-          <span class="text-purple-600 font-bold">Capacitor</span>.
-        </p>
+        <div class="apple-notif-card !max-w-none border-purple-500/30 cursor-pointer group" data-jump="track-capacitor">
+          <div class="apple-notif-header">
+            <div class="apple-notif-app">
+              <span class="apple-app-name text-purple-600">03 / Capacitor</span>
+            </div>
+            <span class="apple-notif-time">DISSECT</span>
+          </div>
+          <h3 class="apple-notif-title text-base group-hover:text-purple-700 transition">Electrolytic Capacitor</h3>
+          <p class="apple-notif-desc">Scroll locks as aluminum sleeve slides open to reveal tightly wound dielectric
+            foils unrolling.</p>
+          <div class="mt-3 text-xs font-mono text-purple-600 flex items-center gap-1 font-semibold">
+            <span>Scroll to Deconstruct</span> →
+          </div>
+        </div>
+      </div>
 
-        <!-- Component Highlights Cards as Apple Notification Banners -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl w-full mt-12 text-left">
-          <div class="apple-notif-card !max-w-none border-amber-500/30 cursor-pointer group" data-jump="track-resistor">
+      <!-- Scroll Indicator Cue -->
+      <div class="mt-16 flex flex-col items-center gap-2 text-slate-500 font-mono text-xs animate-bounce">
+        <span class="tracking-widest">SCROLL DOWN TO ENGAGE 3D DISASSEMBLY</span>
+        <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+           TRACK 1: RESISTOR (PRATIRODHAK) - CLEAN 3D CANVAS
+           =================================================================== -->
+    <section id="track-resistor" class="relative w-full">
+      <!-- FULL-SCREEN PINNED STAGE -->
+      <div id="stage-resistor" class="fullscreen-stage flex flex-col justify-between">
+
+        <!-- High-Performance Hardware Canvas -->
+        <canvas id="canvas-resistor" class="hardware-canvas"></canvas>
+
+        <!-- Spotlight & Vignette -->
+        <div id="spotlight-resistor" class="spotlight-flare"></div>
+        <div class="cinematic-vignette"></div>
+
+        <!-- Top Component Title Card -->
+        <div
+          class="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-24 flex justify-between items-start pointer-events-none">
+          <div class="apple-notif-card pointer-events-auto border-amber-500/30">
             <div class="apple-notif-header">
               <div class="apple-notif-app">
                 <span class="apple-app-name text-amber-600">01 / Resistor</span>
               </div>
-              <span class="apple-notif-time">DISSECT</span>
+              <span class="apple-notif-time">HARDWARE</span>
             </div>
-            <h3 class="apple-notif-title text-base group-hover:text-amber-700 transition">Carbon Film Resistor</h3>
-            <p class="apple-notif-desc">Scroll locks to disassemble into ceramic core, carbon film helix, and nickel end caps.</p>
-            <div class="mt-3 text-xs font-mono text-amber-600 flex items-center gap-1 font-semibold">
-              <span>Scroll to Disassemble</span> →
+            <h2 class="apple-notif-title text-base sm:text-lg">Carbon Film Resistor</h2>
+            <div class="apple-notif-desc">1.0 kΩ ±5% • Axial 4-Band Code</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Floating HUD Markers Placed Directly on the 3D Canvas Scene -->
+        <div id="hud-res-core" class="hud-marker opacity-0 top-[48%] left-[50%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-black/10 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name">Substrate</span>
+              </div>
+              <span class="apple-notif-time">NOW</span>
+            </div>
+            <div class="apple-notif-title">Alumina Ceramic Rods</div>
+            <div class="apple-notif-desc">High thermal stability structural core</div>
+          </div>
+        </div>
+
+        <div id="hud-res-helix" class="hud-marker opacity-0 top-[32%] left-[34%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-sky-400/40 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-sky-600">Resistive Track</span>
+              </div>
+              <span class="apple-notif-time">ACTIVE</span>
+            </div>
+            <div class="apple-notif-title">Carbon Film Helix Spiral</div>
+            <div class="apple-notif-desc">Laser-grooved precision resistive path</div>
+          </div>
+        </div>
+
+        <div id="hud-res-caps" class="hud-marker opacity-0 top-[65%] left-[22%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-slate-300 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name">Terminals</span>
+              </div>
+              <span class="apple-notif-time">NOW</span>
+            </div>
+            <div class="apple-notif-title">Nickel-Plated End Caps</div>
+            <div class="apple-notif-desc">Axial tinned copper wire leads</div>
+          </div>
+        </div>
+
+        <div id="hud-res-shell" class="hud-marker opacity-0 top-[28%] left-[72%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-amber-500/30 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-amber-600">Outer Layer</span>
+              </div>
+              <span class="apple-notif-time">ACTIVE</span>
+            </div>
+            <div class="apple-notif-title">Protective Epoxy Shell</div>
+            <div class="apple-notif-desc">Conformal flame-retardant coating</div>
+          </div>
+        </div>
+
+        <!-- Bottom Corner Interactive Telemetry / Inspection Badge -->
+        <div
+          class="w-full max-w-7xl mx-auto px-6 sm:px-12 pb-8 flex justify-end items-end pointer-events-none relative z-20">
+          <div
+            class="apple-notif-card pointer-events-auto border-amber-500/30 flex items-center gap-3 py-2.5 px-4 shadow-lg">
+            <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
+            <div>
+              <div class="text-[10px] font-mono font-bold tracking-wider text-amber-700 uppercase">360° Hardware View
+              </div>
+              <div class="text-xs font-semibold text-[#1d1d1f]">Scroll to Inspect Anatomy</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+           SLIDE 1: RESISTOR THEORY & OHM'S LAW
+           =================================================================== -->
+    <section id="slide-resistor"
+      class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-y border-slate-200/40 relative">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+        <!-- Theory Left Column -->
+        <div class="lg:col-span-7 space-y-6 theory-card-animate">
+          <div
+            class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-amber-500/25 text-amber-700 text-xs font-mono uppercase tracking-wider bg-amber-500/15 shadow-sm">
+            <span class="font-bold">Theoretical Foundation</span>
+            <span class="text-slate-400">•</span>
+            <span class="text-slate-600">Resistance</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f] leading-tight">
+            Ohm's Law & Internal Charge Dissipation
+          </h2>
+
+          <p class="text-[#515154] leading-relaxed text-sm sm:text-base">
+            A <strong>resistor</strong> is a passive two-terminal electrical component that implements electrical
+            resistance as a circuit element. It restricts charge carrier flow by inducing inelastic collisions between
+            conduction electrons and lattice ions, converting kinetic energy into thermal dissipation.
+          </p>
+
+          <!-- Formulas Box as Apple Notification Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="apple-notif-card !max-w-none border-amber-500/25">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-amber-600">Ohm's Law</span>
+                </div>
+                <span class="apple-notif-time">EQUATION</span>
+              </div>
+              <div class="text-2xl font-extrabold text-amber-600 font-mono tracking-wide py-1">V = I · R</div>
+              <div class="apple-notif-desc">Potential difference (V) is directly proportional to current (I) across
+                resistance (R).</div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-amber-500/25">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-amber-600">Resistivity Formula</span>
+                </div>
+                <span class="apple-notif-time">GEOMETRY</span>
+              </div>
+              <div class="text-2xl font-extrabold text-amber-600 font-mono tracking-wide py-1">R = ρ (L / A)</div>
+              <div class="apple-notif-desc">Where ρ is material resistivity, L is helical track length, and A is
+                cross-sectional area.</div>
             </div>
           </div>
 
-          <div class="apple-notif-card !max-w-none border-sky-500/30 cursor-pointer group" data-jump="track-inductor">
+          <!-- Joulean Power Dissipation -->
+          <div class="apple-notif-card !max-w-none border-amber-500/25 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div>
+                <div class="apple-notif-header !mb-0">
+                  <span class="apple-app-name text-slate-600">Joule Heating / Power Dissipation</span>
+                </div>
+                <div class="text-lg font-bold text-[#1d1d1f] font-mono">P = I² · R = V² / R</div>
+              </div>
+            </div>
+            <div
+              class="apple-notif-pill px-3 py-1 bg-amber-500/15 text-amber-800 text-xs font-mono border border-amber-500/30">
+              1 Watt = 1 Joule/sec
+            </div>
+          </div>
+
+          <!-- Resistor Construction Points as Apple Notification Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-sky-600">Helical Grooving</span>
+                </div>
+                <span class="apple-notif-time">SPEC</span>
+              </div>
+              <div class="apple-notif-desc">Precision laser cutting forms a spiral resistive carbon track. Pitch
+                controls overall resistance value.</div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-slate-600">Ceramic Core</span>
+                </div>
+                <span class="apple-notif-time">SPEC</span>
+              </div>
+              <div class="apple-notif-desc">High alumina ceramic rod provides supreme thermal conductivity and
+                structural rigidity under heavy load.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Calculator Right Column -->
+        <div class="lg:col-span-5 theory-card-animate">
+          <div class="apple-notif-card !max-w-none border-amber-500/25 p-6 space-y-6 shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-200/60 pb-4">
+              <div class="flex items-center gap-3">
+                <div>
+                  <h3 class="text-base font-bold text-[#1d1d1f]">Interactive Ohm's Law Lab</h3>
+                  <span class="text-[10px] font-mono text-amber-600 uppercase tracking-wider block">Real-time
+                    Simulation</span>
+                </div>
+              </div>
+              <span
+                class="apple-notif-time bg-amber-500/15 border border-amber-500/30 text-amber-700 px-2.5 py-1 rounded-full font-bold">LIVE</span>
+            </div>
+
+            <!-- Slider 1: Voltage -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-600">Voltage (V):</span>
+                <span id="display-v" class="text-amber-700 font-bold">12 V</span>
+              </div>
+              <input id="slider-v" type="range" min="1" max="48" value="12" step="1"
+                class="w-full accent-amber-500 cursor-pointer" />
+            </div>
+
+            <!-- Slider 2: Resistance -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-600">Resistance (R):</span>
+                <span id="display-r" class="text-amber-700 font-bold">100 Ω</span>
+              </div>
+              <input id="slider-r" type="range" min="10" max="500" value="100" step="5"
+                class="w-full accent-amber-500 cursor-pointer" />
+            </div>
+
+            <!-- Calculated Results as Apple Notification Cards -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-3.5">
+                <div class="apple-notif-header !mb-1">
+                  <span class="apple-app-name text-[9px] text-sky-700">Current (I = V/R)</span>
+                </div>
+                <span id="val-current" class="text-xl font-extrabold text-sky-700 font-mono block">0.12 A</span>
+              </div>
+              <div class="apple-stat-card border-amber-300/60 bg-amber-500/10 p-3.5">
+                <div class="apple-notif-header !mb-1">
+                  <span class="apple-app-name text-[9px] text-amber-700">Power (P = V·I)</span>
+                </div>
+                <span id="val-power" class="text-xl font-extrabold text-amber-700 font-mono block">1.44 W</span>
+              </div>
+            </div>
+
+            <!-- Live AC Waveform Oscilloscope (Resistor: In Phase φ = 0°) -->
+            <div class="space-y-1.5 pt-1">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-600 font-semibold">Live AC Oscilloscope [v(t) vs i(t)]:</span>
+                <span
+                  class="text-[10px] text-emerald-700 font-bold bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/30">IN
+                  PHASE (φ = 0°)</span>
+              </div>
+              <div class="oscilloscope-screen">
+                <canvas id="scope-resistor" class="oscilloscope-canvas"></canvas>
+                <div
+                  class="absolute bottom-1.5 left-2 flex items-center gap-3 text-[9px] font-mono text-slate-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur">
+                  <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-amber-400 inline-block"></span> V(t)
+                    Voltage</span>
+                  <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-sky-400 inline-block"></span> I(t)
+                    Current</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-amber-400/40 bg-white/30 backdrop-blur-md p-3.5">
+              <div class="flex items-start gap-2.5">
+                <div class="apple-notif-desc text-amber-950 text-xs leading-relaxed">
+                  <strong class="text-amber-800">Phase Note:</strong> In DC and resistive AC circuits, voltage and
+                  current cross zero at the exact same instant (φ = 0°). Power is always positive and dissipated
+                  irreversibly as Joulean heat.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 4-Band Resistor Color Code Calculator Module -->
+      <div class="max-w-6xl w-full mt-10 space-y-4">
+        <div class="apple-notif-card !max-w-none border-amber-500/25 p-6 shadow-md">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-4">
+            <div>
+              <h3 class="text-lg font-bold text-[#1d1d1f]">Interactive 4-Band Resistor Color Code Decoder</h3>
+              <span class="text-xs text-slate-500 font-mono">Standard EIA-RS-272 color band multiplier and tolerance
+                evaluation</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono text-slate-600 font-semibold">Decoded:</span>
+              <span id="resistor-color-value"
+                class="px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 font-mono font-extrabold text-amber-800 text-sm">1.0
+                kΩ ±5%</span>
+            </div>
+          </div>
+
+          <!-- Resistor Visual Strip Preview -->
+          <div class="py-6 flex items-center justify-center">
+            <div class="relative w-72 flex items-center justify-center">
+              <!-- Left Lead Wire -->
+              <div class="resistor-graphic-lead -left-8"></div>
+              <!-- Resistor Ceramic Body -->
+              <div class="resistor-graphic-body w-full relative flex items-center justify-around px-8">
+                <div id="band-strip-1" class="resistor-band-strip left-12 bg-amber-800" title="Band 1"></div>
+                <div id="band-strip-2" class="resistor-band-strip left-24 bg-black" title="Band 2"></div>
+                <div id="band-strip-3" class="resistor-band-strip left-36 bg-red-600" title="Multiplier"></div>
+                <div id="band-strip-4" class="resistor-band-strip right-12 bg-yellow-500" title="Tolerance"></div>
+              </div>
+              <!-- Right Lead Wire -->
+              <div class="resistor-graphic-lead -right-8"></div>
+            </div>
+          </div>
+
+          <!-- 4 Dropdown Selectors -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono pt-2">
+            <div class="space-y-1">
+              <label class="text-slate-500 block">Band 1 (1st Digit):</label>
+              <select id="select-band-1"
+                class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
+                <option value="1" selected>Brown (1)</option>
+                <option value="2">Red (2)</option>
+                <option value="3">Orange (3)</option>
+                <option value="4">Yellow (4)</option>
+                <option value="5">Green (5)</option>
+                <option value="6">Blue (6)</option>
+                <option value="7">Violet (7)</option>
+                <option value="8">Gray (8)</option>
+                <option value="9">White (9)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-slate-500 block">Band 2 (2nd Digit):</label>
+              <select id="select-band-2"
+                class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
+                <option value="0" selected>Black (0)</option>
+                <option value="1">Brown (1)</option>
+                <option value="2">Red (2)</option>
+                <option value="3">Orange (3)</option>
+                <option value="4">Yellow (4)</option>
+                <option value="5">Green (5)</option>
+                <option value="6">Blue (6)</option>
+                <option value="7">Violet (7)</option>
+                <option value="8">Gray (8)</option>
+                <option value="9">White (9)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-slate-500 block">Band 3 (Multiplier):</label>
+              <select id="select-band-3"
+                class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
+                <option value="1">Black (×1 Ω)</option>
+                <option value="10">Brown (×10 Ω)</option>
+                <option value="100" selected>Red (×100 Ω)</option>
+                <option value="1000">Orange (×1 kΩ)</option>
+                <option value="10000">Yellow (×10 kΩ)</option>
+                <option value="100000">Green (×100 kΩ)</option>
+                <option value="1000000">Blue (×1 MΩ)</option>
+                <option value="0.1">Gold (×0.1 Ω)</option>
+                <option value="0.01">Silver (×0.01 Ω)</option>
+              </select>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-slate-500 block">Band 4 (Tolerance):</label>
+              <select id="select-band-4"
+                class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
+                <option value="5" selected>Gold (±5%)</option>
+                <option value="10">Silver (±10%)</option>
+                <option value="1">Brown (±1%)</option>
+                <option value="2">Red (±2%)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-World Industry Hardware Applications -->
+        <div class="apple-notif-card !max-w-none border-white/60 p-6 sm:p-7 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            <h4 class="text-xs font-mono uppercase tracking-widest text-slate-600 font-bold">Real-World Hardware
+              Engineering Applications</h4>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="industry-app-card border-amber-500/20">
+              <span class="text-[10px] font-mono text-amber-700 font-bold uppercase tracking-wider block">EV
+                Powertrains</span>
+              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Kelvin Current Shunt Sensing</h5>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">Ultra-low resistance (0.5 mΩ) manganese-copper
+                shunts monitor 400A battery traction currents with 0.1% accuracy in BMS controllers.</p>
+            </div>
+            <div class="industry-app-card border-amber-500/20">
+              <span class="text-[10px] font-mono text-amber-700 font-bold uppercase tracking-wider block">Digital
+                Microelectronics</span>
+              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">I²C & SMBus Bus Pull-Ups</h5>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">4.7 kΩ pull-up resistors maintain logic-high state
+                on open-drain SDA/SCL serial lines, defining rise-time constants and preventing bus floating.</p>
+            </div>
+            <div class="industry-app-card border-amber-500/20">
+              <span class="text-[10px] font-mono text-amber-700 font-bold uppercase tracking-wider block">Power
+                Electronics</span>
+              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">DC-DC Feedback Voltage Dividers</h5>
+              <p class="text-xs text-slate-600 mt-2 leading-relaxed">Thin-film 0.1% precision resistors sample output
+                voltages into buck converter error amplifiers, locking sub-1.0V microprocessor core rails.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+           TRACK 2: INDUCTOR (PRERAK) - CLEAN 3D CANVAS
+           =================================================================== -->
+    <section id="track-inductor" class="relative w-full">
+      <!-- FULL-SCREEN PINNED STAGE -->
+      <div id="stage-inductor" class="fullscreen-stage flex flex-col justify-between">
+
+        <!-- High-Performance Hardware Canvas Element -->
+        <canvas id="canvas-inductor" class="hardware-canvas"></canvas>
+
+        <!-- Spotlight & Vignette -->
+        <div id="spotlight-inductor" class="spotlight-flare"></div>
+        <div class="cinematic-vignette"></div>
+
+        <!-- Top Component Title Card -->
+        <div
+          class="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-24 flex justify-between items-start pointer-events-none">
+          <div class="apple-notif-card pointer-events-auto border-sky-500/30">
             <div class="apple-notif-header">
               <div class="apple-notif-app">
                 <span class="apple-app-name text-sky-600">02 / Inductor</span>
               </div>
-              <span class="apple-notif-time">DISSECT</span>
+              <span class="apple-notif-time">HARDWARE</span>
             </div>
-            <h3 class="apple-notif-title text-base group-hover:text-sky-700 transition">Copper Wire Inductor</h3>
-            <p class="apple-notif-desc">Scroll locks as copper coil uncoils with glowing blue energy flux lines exposing iron core.</p>
-            <div class="mt-3 text-xs font-mono text-sky-600 flex items-center gap-1 font-semibold">
-              <span>Scroll to Uncoil</span> →
+            <h2 class="apple-notif-title text-base sm:text-lg">Copper Wire Inductor</h2>
+            <div class="apple-notif-desc">10 mH • Ferrite Choke Core</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Floating HUD Markers Placed Directly on the 3D Canvas Scene -->
+        <div id="hud-ind-coil" class="hud-marker opacity-0 top-[36%] left-[30%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-amber-500/30 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-amber-600">Winding</span>
+              </div>
+              <span class="apple-notif-time">NOW</span>
+            </div>
+            <div class="apple-notif-title">Spiral Copper Wire Coil</div>
+            <div class="apple-notif-desc">Enamelled high-purity copper turns</div>
+          </div>
+        </div>
+
+        <div id="hud-ind-flux" class="hud-marker opacity-0 top-[26%] left-[66%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-sky-400/40 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-sky-600">Magnetic Field</span>
+              </div>
+              <span class="apple-notif-time">ACTIVE</span>
+            </div>
+            <div class="apple-notif-title">Glowing Blue Energy Flux</div>
+            <div class="apple-notif-desc">Dynamic B-field magnetic flux lines</div>
+          </div>
+        </div>
+
+        <div id="hud-ind-core" class="hud-marker opacity-0 top-[62%] left-[52%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-slate-300 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-slate-600">Magnetic Core</span>
+              </div>
+              <span class="apple-notif-time">NOW</span>
+            </div>
+            <div class="apple-notif-title">Ferromagnetic Iron Core</div>
+            <div class="apple-notif-desc">High permeability flux amplifier</div>
+          </div>
+        </div>
+
+        <!-- Bottom Corner Interactive Telemetry / Inspection Badge -->
+        <div
+          class="w-full max-w-7xl mx-auto px-6 sm:px-12 pb-8 flex justify-end items-end pointer-events-none relative z-20">
+          <div
+            class="apple-notif-card pointer-events-auto border-sky-500/30 flex items-center gap-3 py-2.5 px-4 shadow-lg">
+            <div class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
+            <div>
+              <div class="text-[10px] font-mono font-bold tracking-wider text-sky-700 uppercase">360° Hardware View
+              </div>
+              <div class="text-xs font-semibold text-[#1d1d1f]">Scroll to Inspect Anatomy</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+           SLIDE 2: INDUCTOR THEORY, FARADAY & LENZ'S LAW
+           =================================================================== -->
+    <section id="slide-inductor"
+      class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-y border-slate-200/40 relative">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+        <!-- Theory Left Column -->
+        <div class="lg:col-span-7 space-y-6 theory-card-animate">
+          <div
+            class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-sky-500/25 text-sky-700 text-xs font-mono uppercase tracking-wider bg-sky-500/15 shadow-sm">
+            <span class="font-bold">Electromagnetic Principles</span>
+            <span class="text-slate-400">•</span>
+            <span class="text-slate-600">Inductance</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f] leading-tight">
+            Faraday's Induction & Lenz's Opposition Law
+          </h2>
+
+          <p class="text-[#515154] leading-relaxed text-sm sm:text-base">
+            An <strong>inductor</strong> resists changes in electric current. According to Faraday's law of induction
+            and Ampère's circuital law, current generates magnetic flux inside the ferromagnetic core. Any change in
+            current induces an opposing back-EMF.
+          </p>
+
+          <!-- Formulas Box as Apple Notification Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="apple-notif-card !max-w-none border-sky-500/25">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-sky-600">Faraday-Lenz Law</span>
+                </div>
+                <span class="apple-notif-time">EQUATION</span>
+              </div>
+              <div class="text-2xl font-extrabold text-sky-600 font-mono tracking-wide py-1">v(t) = L · (di / dt)</div>
+              <div class="apple-notif-desc">Induced electromotive force opposes the instantaneous rate of current change
+                (Lenz's Law).</div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-sky-500/25">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-sky-600">Stored Energy</span>
+                </div>
+                <span class="apple-notif-time">B-FIELD</span>
+              </div>
+              <div class="text-2xl font-extrabold text-sky-600 font-mono tracking-wide py-1">E = ½ · L · I²</div>
+              <div class="apple-notif-desc">Energy stored reversibly in the magnetic flux volume within core
+                permeability.</div>
             </div>
           </div>
 
-          <div class="apple-notif-card !max-w-none border-purple-500/30 cursor-pointer group" data-jump="track-capacitor">
+          <!-- AC Reactance & Phase -->
+          <div class="apple-notif-card !max-w-none border-sky-500/25 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div>
+                <div class="apple-notif-header !mb-0">
+                  <span class="apple-app-name text-slate-600">Inductive Reactance (AC Opposition)</span>
+                </div>
+                <div class="text-lg font-bold text-[#1d1d1f] font-mono">X_L = 2π · f · L = ωL</div>
+              </div>
+            </div>
+            <div
+              class="apple-notif-pill px-3 py-1 bg-sky-500/15 text-sky-800 text-xs font-mono border border-sky-500/30">
+              Current lags voltage by 90° (ELI)
+            </div>
+          </div>
+
+          <!-- Inductor Construction Points as Apple Notification Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-sky-600">Ferromagnetic Core</span>
+                </div>
+                <span class="apple-notif-time">FLUX</span>
+              </div>
+              <div class="apple-notif-desc">Boosts relative permeability (μᵣ) thousands of times over air, concentrating
+                magnetic flux lines.</div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-slate-600">Lamination & Ferrite</span>
+                </div>
+                <span class="apple-notif-time">EDDY</span>
+              </div>
+              <div class="apple-notif-desc">Insulated lamination stacks suppress parasitic eddy current losses and
+                high-frequency overheating.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Calculator Right Column -->
+        <div class="lg:col-span-5 theory-card-animate">
+          <div class="apple-notif-card !max-w-none border-sky-500/25 p-6 space-y-6 shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-200/60 pb-4">
+              <div class="flex items-center gap-3">
+                <div>
+                  <h3 class="text-base font-bold text-[#1d1d1f]">Inductive Reactance Lab</h3>
+                  <span class="text-[10px] font-mono text-sky-600 uppercase tracking-wider block">AC Simulator</span>
+                </div>
+              </div>
+              <span
+                class="apple-notif-time bg-sky-500/15 border border-sky-500/30 text-sky-700 px-2.5 py-1 rounded-full font-bold">LIVE</span>
+            </div>
+
+            <!-- Slider 1: Frequency -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-600">AC Frequency (f):</span>
+                <span id="display-freq" class="text-sky-700 font-bold">50 Hz</span>
+              </div>
+              <input id="slider-freq" type="range" min="10" max="1000" value="50" step="10"
+                class="w-full accent-sky-600 cursor-pointer" />
+            </div>
+
+            <!-- Slider 2: Inductance -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-600">Inductance (L):</span>
+                <span id="display-ind" class="text-sky-700 font-bold">25 mH</span>
+              </div>
+              <input id="slider-ind" type="range" min="1" max="100" value="25" step="1"
+                class="w-full accent-sky-600 cursor-pointer" />
+            </div>
+
+            <!-- Calculated Outputs as Apple Notification Cards -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-3.5">
+                <div class="apple-notif-header !mb-1">
+                  <span class="apple-app-name text-[9px] text-sky-700">Reactance (X_L)</span>
+                </div>
+                <span id="val-xl" class="text-xl font-extrabold text-sky-700 font-mono block">7.85 Ω</span>
+              </div>
+              <div class="apple-stat-card border-amber-300/60 bg-amber-500/10 p-3.5">
+                <div class="apple-notif-header !mb-1">
+                  <span class="apple-app-name text-[9px] text-amber-700">Energy @ 1.5A</span>
+                </div>
+                <span id="val-el" class="text-xl font-extrabold text-amber-700 font-mono block">28.13 mJ</span>
+              </div>
+            </div>
+
+            <!-- Live AC Waveform Oscilloscope (Inductor: Current Lags by 90° - ELI) -->
+            <div class="space-y-1.5 pt-1">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-600 font-semibold">Live AC Oscilloscope [v(t) vs i(t)]:</span>
+                <span
+                  class="text-[10px] text-sky-700 font-bold bg-sky-500/15 px-2 py-0.5 rounded-full border border-sky-500/30">CURRENT
+                  LAGS 90° (ELI)</span>
+              </div>
+              <div class="oscilloscope-screen">
+                <canvas id="scope-inductor" class="oscilloscope-canvas"></canvas>
+                <div
+                  class="absolute bottom-1.5 left-2 flex items-center gap-3 text-[9px] font-mono text-slate-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur">
+                  <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-sky-400 inline-block"></span> V(t)
+                    Voltage (Leads)</span>
+                  <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-amber-400 inline-block"></span> I(t)
+                    Current (Lags 90°)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-sky-400/40 bg-white/30 backdrop-blur-md p-3.5">
+              <div class="flex items-start gap-2.5">
+                <div class="apple-notif-desc text-sky-950 text-xs leading-relaxed">
+                  <strong class="text-sky-800">Frequency Response:</strong> Reactance increases linearly with frequency.
+                  At DC (f = 0), an ideal inductor is a short circuit (X_L = 0 Ω); as frequency rises, back-EMF chokes
+                  AC current flow.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Real-World Industry Hardware Applications (Inductor) -->
+      <div class="max-w-6xl w-full mt-12 apple-notif-card !max-w-none border-white/60 p-6 sm:p-7 space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+          <h4 class="text-xs font-mono uppercase tracking-widest text-slate-600 font-bold">Real-World Hardware
+            Engineering Applications</h4>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="industry-app-card border-sky-500/20">
+            <span class="text-[10px] font-mono text-sky-700 font-bold uppercase tracking-wider block">Computer
+              Hardware</span>
+            <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Multi-Phase GPU/CPU VRM Power Chokes</h5>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Molded ferrite power inductors store magnetic energy
+              to smooth switching pulses, delivering 250A ripple-free DC power to AI accelerators.</p>
+          </div>
+          <div class="industry-app-card border-sky-500/20">
+            <span class="text-[10px] font-mono text-sky-700 font-bold uppercase tracking-wider block">Signal
+              Integrity</span>
+            <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Common-Mode USB-C / Ethernet EMI Chokes</h5>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Bifilar wound ferrite toroids present high impedance
+              to common-mode electromagnetic noise while passing differential data signals unscathed.</p>
+          </div>
+          <div class="industry-app-card border-sky-500/20">
+            <span class="text-[10px] font-mono text-sky-700 font-bold uppercase tracking-wider block">Mobile
+              Devices</span>
+            <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Qi Wireless Resonant Charging Coils</h5>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">High-Q planar spiral copper coils magnetically couple
+              at 127 kHz to transfer up to 15W across air gaps via electromagnetic near-field induction.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+           TRACK 3: CAPACITOR (SANDHARITRAK) - CLEAN 3D CANVAS
+           =================================================================== -->
+    <section id="track-capacitor" class="relative w-full">
+      <!-- FULL-SCREEN PINNED STAGE -->
+      <div id="stage-capacitor" class="fullscreen-stage flex flex-col justify-between">
+
+        <!-- High-Performance Hardware Canvas Element -->
+        <canvas id="canvas-capacitor" class="hardware-canvas"></canvas>
+
+        <!-- Spotlight & Vignette -->
+        <div id="spotlight-capacitor" class="spotlight-flare"></div>
+        <div class="cinematic-vignette"></div>
+
+        <!-- Top Component Title Card -->
+        <div
+          class="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-24 flex justify-between items-start pointer-events-none">
+          <div class="apple-notif-card pointer-events-auto border-purple-500/30">
             <div class="apple-notif-header">
               <div class="apple-notif-app">
                 <span class="apple-app-name text-purple-600">03 / Capacitor</span>
               </div>
-              <span class="apple-notif-time">DISSECT</span>
+              <span class="apple-notif-time">HARDWARE</span>
             </div>
-            <h3 class="apple-notif-title text-base group-hover:text-purple-700 transition">Electrolytic Capacitor</h3>
-            <p class="apple-notif-desc">Scroll locks as aluminum sleeve slides open to reveal tightly wound dielectric foils unrolling.</p>
-            <div class="mt-3 text-xs font-mono text-purple-600 flex items-center gap-1 font-semibold">
-              <span>Scroll to Deconstruct</span> →
+            <h2 class="apple-notif-title text-base sm:text-lg">Electrolytic Capacitor</h2>
+            <div class="apple-notif-desc">470 µF • 25V Foil Roll</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Floating HUD Markers Placed Directly on the 3D Canvas Scene -->
+        <div id="hud-cap-casing" class="hud-marker opacity-0 top-[28%] left-[32%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-slate-300 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-slate-600">Exterior Shield</span>
+              </div>
+              <span class="apple-notif-time">NOW</span>
+            </div>
+            <div class="apple-notif-title">Shiny Aluminum Shell</div>
+            <div class="apple-notif-desc">Hermetically sealed protective casing</div>
+          </div>
+        </div>
+
+        <div id="hud-cap-foils" class="hud-marker opacity-0 top-[50%] left-[55%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-purple-400/40 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name text-purple-600">Dielectric Foils</span>
+              </div>
+              <span class="apple-notif-time">ACTIVE</span>
+            </div>
+            <div class="apple-notif-title">Jelly Roll Deconstruction</div>
+            <div class="apple-notif-desc">Tightly wound foil & dielectric paper</div>
+          </div>
+        </div>
+
+        <div id="hud-cap-terminals" class="hud-marker opacity-0 top-[75%] left-[28%] -translate-x-1/2 -translate-y-1/2">
+          <div class="apple-notif-card border-black/10 shadow-lg">
+            <div class="apple-notif-header">
+              <div class="apple-notif-app">
+                <span class="apple-app-name">Polarized Pins</span>
+              </div>
+              <span class="apple-notif-time">NOW</span>
+            </div>
+            <div class="apple-notif-title">Anode (+) & Cathode (-) Leads</div>
+            <div class="apple-notif-desc">Through-hole polarized terminal pins</div>
+          </div>
+        </div>
+
+        <!-- Bottom Corner Interactive Telemetry / Inspection Badge -->
+        <div
+          class="w-full max-w-7xl mx-auto px-6 sm:px-12 pb-8 flex justify-end items-end pointer-events-none relative z-20">
+          <div
+            class="apple-notif-card pointer-events-auto border-purple-500/30 flex items-center gap-3 py-2.5 px-4 shadow-lg">
+            <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
+            <div>
+              <div class="text-[10px] font-mono font-bold tracking-wider text-purple-700 uppercase">360° Hardware View
+              </div>
+              <div class="text-xs font-semibold text-[#1d1d1f]">Scroll to Inspect Anatomy</div>
             </div>
           </div>
         </div>
 
-        <!-- Scroll Indicator Cue -->
-        <div class="mt-16 flex flex-col items-center gap-2 text-slate-500 font-mono text-xs animate-bounce">
-          <span class="tracking-widest">SCROLL DOWN TO ENGAGE 3D DISASSEMBLY</span>
-          <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ===================================================================
-           TRACK 1: RESISTOR (PRATIRODHAK) - CLEAN 3D CANVAS
-           =================================================================== -->
-      <section id="track-resistor" class="relative w-full">
-        <!-- FULL-SCREEN PINNED STAGE -->
-        <div id="stage-resistor" class="fullscreen-stage flex flex-col justify-between">
-          
-          <!-- High-Performance Hardware Canvas -->
-          <canvas id="canvas-resistor" class="hardware-canvas"></canvas>
-
-          <!-- Spotlight & Vignette -->
-          <div id="spotlight-resistor" class="spotlight-flare"></div>
-          <div class="cinematic-vignette"></div>
-
-          <!-- Top Component Title Card -->
-          <div class="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-24 flex justify-between items-start pointer-events-none">
-            <div class="apple-notif-card pointer-events-auto border-amber-500/30">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-amber-600">01 / Resistor</span>
-                </div>
-                <span class="apple-notif-time">HARDWARE</span>
-              </div>
-              <h2 class="apple-notif-title text-base sm:text-lg">Carbon Film Resistor</h2>
-              <div class="apple-notif-desc">1.0 kΩ ±5% • Axial 4-Band Code</div>
-            </div>
-          </div>
-
-          <!-- Dynamic Floating HUD Markers Placed Directly on the 3D Canvas Scene -->
-          <div id="hud-res-core" class="hud-marker opacity-0 top-[48%] left-[50%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-black/10 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name">Substrate</span>
-                </div>
-                <span class="apple-notif-time">NOW</span>
-              </div>
-              <div class="apple-notif-title">Alumina Ceramic Rods</div>
-              <div class="apple-notif-desc">High thermal stability structural core</div>
-            </div>
-          </div>
-
-          <div id="hud-res-helix" class="hud-marker opacity-0 top-[32%] left-[34%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-sky-400/40 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-sky-600">Resistive Track</span>
-                </div>
-                <span class="apple-notif-time">ACTIVE</span>
-              </div>
-              <div class="apple-notif-title">Carbon Film Helix Spiral</div>
-              <div class="apple-notif-desc">Laser-grooved precision resistive path</div>
-            </div>
-          </div>
-
-          <div id="hud-res-caps" class="hud-marker opacity-0 top-[65%] left-[22%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-slate-300 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name">Terminals</span>
-                </div>
-                <span class="apple-notif-time">NOW</span>
-              </div>
-              <div class="apple-notif-title">Nickel-Plated End Caps</div>
-              <div class="apple-notif-desc">Axial tinned copper wire leads</div>
-            </div>
-          </div>
-
-          <div id="hud-res-shell" class="hud-marker opacity-0 top-[28%] left-[72%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-amber-500/30 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-amber-600">Outer Layer</span>
-                </div>
-                <span class="apple-notif-time">ACTIVE</span>
-              </div>
-              <div class="apple-notif-title">Protective Epoxy Shell</div>
-              <div class="apple-notif-desc">Conformal flame-retardant coating</div>
-            </div>
-          </div>
-
-          <!-- Bottom Corner Interactive Telemetry / Inspection Badge -->
-          <div class="w-full max-w-7xl mx-auto px-6 sm:px-12 pb-8 flex justify-end items-end pointer-events-none relative z-20">
-            <div class="apple-notif-card pointer-events-auto border-amber-500/30 flex items-center gap-3 py-2.5 px-4 shadow-lg">
-              <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
-              <div>
-                <div class="text-[10px] font-mono font-bold tracking-wider text-amber-700 uppercase">360° Hardware View</div>
-                <div class="text-xs font-semibold text-[#1d1d1f]">Scroll to Inspect Anatomy</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ===================================================================
-           SLIDE 1: RESISTOR THEORY & OHM'S LAW
-           =================================================================== -->
-      <section id="slide-resistor" class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-y border-slate-200/40 relative">
-        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
-          <!-- Theory Left Column -->
-          <div class="lg:col-span-7 space-y-6 theory-card-animate">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-amber-500/25 text-amber-700 text-xs font-mono uppercase tracking-wider bg-amber-500/15 shadow-sm">
-              <span class="font-bold">Theoretical Foundation</span>
-              <span class="text-slate-400">•</span>
-              <span class="text-slate-600">Resistance</span>
-            </div>
-            
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f] leading-tight">
-              Ohm's Law & Internal Charge Dissipation
-            </h2>
-            
-            <p class="text-[#515154] leading-relaxed text-sm sm:text-base">
-              A <strong>resistor</strong> is a passive two-terminal electrical component that implements electrical resistance as a circuit element. It restricts charge carrier flow by inducing inelastic collisions between conduction electrons and lattice ions, converting kinetic energy into thermal dissipation.
-            </p>
-
-            <!-- Formulas Box as Apple Notification Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="apple-notif-card !max-w-none border-amber-500/25">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-amber-600">Ohm's Law</span>
-                  </div>
-                  <span class="apple-notif-time">EQUATION</span>
-                </div>
-                <div class="text-2xl font-extrabold text-amber-600 font-mono tracking-wide py-1">V = I · R</div>
-                <div class="apple-notif-desc">Potential difference (V) is directly proportional to current (I) across resistance (R).</div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-amber-500/25">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-amber-600">Resistivity Formula</span>
-                  </div>
-                  <span class="apple-notif-time">GEOMETRY</span>
-                </div>
-                <div class="text-2xl font-extrabold text-amber-600 font-mono tracking-wide py-1">R = ρ (L / A)</div>
-                <div class="apple-notif-desc">Where ρ is material resistivity, L is helical track length, and A is cross-sectional area.</div>
-              </div>
-            </div>
-
-            <!-- Joulean Power Dissipation -->
-            <div class="apple-notif-card !max-w-none border-amber-500/25 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div>
-                  <div class="apple-notif-header !mb-0">
-                    <span class="apple-app-name text-slate-600">Joule Heating / Power Dissipation</span>
-                  </div>
-                  <div class="text-lg font-bold text-[#1d1d1f] font-mono">P = I² · R = V² / R</div>
-                </div>
-              </div>
-              <div class="apple-notif-pill px-3 py-1 bg-amber-500/15 text-amber-800 text-xs font-mono border border-amber-500/30">
-                1 Watt = 1 Joule/sec
-              </div>
-            </div>
-
-            <!-- Resistor Construction Points as Apple Notification Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-sky-600">Helical Grooving</span>
-                  </div>
-                  <span class="apple-notif-time">SPEC</span>
-                </div>
-                <div class="apple-notif-desc">Precision laser cutting forms a spiral resistive carbon track. Pitch controls overall resistance value.</div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-slate-600">Ceramic Core</span>
-                  </div>
-                  <span class="apple-notif-time">SPEC</span>
-                </div>
-                <div class="apple-notif-desc">High alumina ceramic rod provides supreme thermal conductivity and structural rigidity under heavy load.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Calculator Right Column -->
-          <div class="lg:col-span-5 theory-card-animate">
-            <div class="apple-notif-card !max-w-none border-amber-500/25 p-6 space-y-6 shadow-lg">
-              <div class="flex items-center justify-between border-b border-slate-200/60 pb-4">
-                <div class="flex items-center gap-3">
-                  <div>
-                    <h3 class="text-base font-bold text-[#1d1d1f]">Interactive Ohm's Law Lab</h3>
-                    <span class="text-[10px] font-mono text-amber-600 uppercase tracking-wider block">Real-time Simulation</span>
-                  </div>
-                </div>
-                <span class="apple-notif-time bg-amber-500/15 border border-amber-500/30 text-amber-700 px-2.5 py-1 rounded-full font-bold">LIVE</span>
-              </div>
-
-              <!-- Slider 1: Voltage -->
-              <div class="space-y-2">
-                <div class="flex justify-between text-xs font-mono">
-                  <span class="text-slate-600">Voltage (V):</span>
-                  <span id="display-v" class="text-amber-700 font-bold">12 V</span>
-                </div>
-                <input id="slider-v" type="range" min="1" max="48" value="12" step="1" class="w-full accent-amber-500 cursor-pointer" />
-              </div>
-
-              <!-- Slider 2: Resistance -->
-              <div class="space-y-2">
-                <div class="flex justify-between text-xs font-mono">
-                  <span class="text-slate-600">Resistance (R):</span>
-                  <span id="display-r" class="text-amber-700 font-bold">100 Ω</span>
-                </div>
-                <input id="slider-r" type="range" min="10" max="500" value="100" step="5" class="w-full accent-amber-500 cursor-pointer" />
-              </div>
-
-              <!-- Calculated Results as Apple Notification Cards -->
-              <div class="grid grid-cols-2 gap-3 pt-2">
-                <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-3.5">
-                  <div class="apple-notif-header !mb-1">
-                    <span class="apple-app-name text-[9px] text-sky-700">Current (I = V/R)</span>
-                  </div>
-                  <span id="val-current" class="text-xl font-extrabold text-sky-700 font-mono block">0.12 A</span>
-                </div>
-                <div class="apple-stat-card border-amber-300/60 bg-amber-500/10 p-3.5">
-                  <div class="apple-notif-header !mb-1">
-                    <span class="apple-app-name text-[9px] text-amber-700">Power (P = V·I)</span>
-                  </div>
-                  <span id="val-power" class="text-xl font-extrabold text-amber-700 font-mono block">1.44 W</span>
-                </div>
-              </div>
-
-              <!-- Live AC Waveform Oscilloscope (Resistor: In Phase φ = 0°) -->
-              <div class="space-y-1.5 pt-1">
-                <div class="flex items-center justify-between text-xs font-mono">
-                  <span class="text-slate-600 font-semibold">Live AC Oscilloscope [v(t) vs i(t)]:</span>
-                  <span class="text-[10px] text-emerald-700 font-bold bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/30">IN PHASE (φ = 0°)</span>
-                </div>
-                <div class="oscilloscope-screen">
-                  <canvas id="scope-resistor" class="oscilloscope-canvas"></canvas>
-                  <div class="absolute bottom-1.5 left-2 flex items-center gap-3 text-[9px] font-mono text-slate-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur">
-                    <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-amber-400 inline-block"></span> V(t) Voltage</span>
-                    <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-sky-400 inline-block"></span> I(t) Current</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-amber-400/40 bg-white/30 backdrop-blur-md p-3.5">
-                <div class="flex items-start gap-2.5">
-                  <div class="apple-notif-desc text-amber-950 text-xs leading-relaxed">
-                    <strong class="text-amber-800">Phase Note:</strong> In DC and resistive AC circuits, voltage and current cross zero at the exact same instant (φ = 0°). Power is always positive and dissipated irreversibly as Joulean heat.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- 4-Band Resistor Color Code Calculator Module -->
-        <div class="max-w-6xl w-full mt-10 space-y-4">
-          <div class="apple-notif-card !max-w-none border-amber-500/25 p-6 shadow-md">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-4">
-              <div>
-                <h3 class="text-lg font-bold text-[#1d1d1f]">Interactive 4-Band Resistor Color Code Decoder</h3>
-                <span class="text-xs text-slate-500 font-mono">Standard EIA-RS-272 color band multiplier and tolerance evaluation</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-mono text-slate-600 font-semibold">Decoded:</span>
-                <span id="resistor-color-value" class="px-3 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 font-mono font-extrabold text-amber-800 text-sm">1.0 kΩ ±5%</span>
-              </div>
-            </div>
-
-            <!-- Resistor Visual Strip Preview -->
-            <div class="py-6 flex items-center justify-center">
-              <div class="relative w-72 flex items-center justify-center">
-                <!-- Left Lead Wire -->
-                <div class="resistor-graphic-lead -left-8"></div>
-                <!-- Resistor Ceramic Body -->
-                <div class="resistor-graphic-body w-full relative flex items-center justify-around px-8">
-                  <div id="band-strip-1" class="resistor-band-strip left-12 bg-amber-800" title="Band 1"></div>
-                  <div id="band-strip-2" class="resistor-band-strip left-24 bg-black" title="Band 2"></div>
-                  <div id="band-strip-3" class="resistor-band-strip left-36 bg-red-600" title="Multiplier"></div>
-                  <div id="band-strip-4" class="resistor-band-strip right-12 bg-yellow-500" title="Tolerance"></div>
-                </div>
-                <!-- Right Lead Wire -->
-                <div class="resistor-graphic-lead -right-8"></div>
-              </div>
-            </div>
-
-            <!-- 4 Dropdown Selectors -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono pt-2">
-              <div class="space-y-1">
-                <label class="text-slate-500 block">Band 1 (1st Digit):</label>
-                <select id="select-band-1" class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
-                  <option value="1" selected>Brown (1)</option>
-                  <option value="2">Red (2)</option>
-                  <option value="3">Orange (3)</option>
-                  <option value="4">Yellow (4)</option>
-                  <option value="5">Green (5)</option>
-                  <option value="6">Blue (6)</option>
-                  <option value="7">Violet (7)</option>
-                  <option value="8">Gray (8)</option>
-                  <option value="9">White (9)</option>
-                </select>
-              </div>
-
-              <div class="space-y-1">
-                <label class="text-slate-500 block">Band 2 (2nd Digit):</label>
-                <select id="select-band-2" class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
-                  <option value="0" selected>Black (0)</option>
-                  <option value="1">Brown (1)</option>
-                  <option value="2">Red (2)</option>
-                  <option value="3">Orange (3)</option>
-                  <option value="4">Yellow (4)</option>
-                  <option value="5">Green (5)</option>
-                  <option value="6">Blue (6)</option>
-                  <option value="7">Violet (7)</option>
-                  <option value="8">Gray (8)</option>
-                  <option value="9">White (9)</option>
-                </select>
-              </div>
-
-              <div class="space-y-1">
-                <label class="text-slate-500 block">Band 3 (Multiplier):</label>
-                <select id="select-band-3" class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
-                  <option value="1">Black (×1 Ω)</option>
-                  <option value="10">Brown (×10 Ω)</option>
-                  <option value="100" selected>Red (×100 Ω)</option>
-                  <option value="1000">Orange (×1 kΩ)</option>
-                  <option value="10000">Yellow (×10 kΩ)</option>
-                  <option value="100000">Green (×100 kΩ)</option>
-                  <option value="1000000">Blue (×1 MΩ)</option>
-                  <option value="0.1">Gold (×0.1 Ω)</option>
-                  <option value="0.01">Silver (×0.01 Ω)</option>
-                </select>
-              </div>
-
-              <div class="space-y-1">
-                <label class="text-slate-500 block">Band 4 (Tolerance):</label>
-                <select id="select-band-4" class="w-full bg-white/40 backdrop-blur-sm border border-slate-200/80 rounded-lg p-2 font-mono text-xs focus:outline-amber-500">
-                  <option value="5" selected>Gold (±5%)</option>
-                  <option value="10">Silver (±10%)</option>
-                  <option value="1">Brown (±1%)</option>
-                  <option value="2">Red (±2%)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <!-- Real-World Industry Hardware Applications -->
-          <div class="apple-notif-card !max-w-none border-white/60 p-6 sm:p-7 space-y-4">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-              <h4 class="text-xs font-mono uppercase tracking-widest text-slate-600 font-bold">Real-World Hardware Engineering Applications</h4>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div class="industry-app-card border-amber-500/20">
-                <span class="text-[10px] font-mono text-amber-700 font-bold uppercase tracking-wider block">EV Powertrains</span>
-                <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Kelvin Current Shunt Sensing</h5>
-                <p class="text-xs text-slate-600 mt-2 leading-relaxed">Ultra-low resistance (0.5 mΩ) manganese-copper shunts monitor 400A battery traction currents with 0.1% accuracy in BMS controllers.</p>
-              </div>
-              <div class="industry-app-card border-amber-500/20">
-                <span class="text-[10px] font-mono text-amber-700 font-bold uppercase tracking-wider block">Digital Microelectronics</span>
-                <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">I²C & SMBus Bus Pull-Ups</h5>
-                <p class="text-xs text-slate-600 mt-2 leading-relaxed">4.7 kΩ pull-up resistors maintain logic-high state on open-drain SDA/SCL serial lines, defining rise-time constants and preventing bus floating.</p>
-              </div>
-              <div class="industry-app-card border-amber-500/20">
-                <span class="text-[10px] font-mono text-amber-700 font-bold uppercase tracking-wider block">Power Electronics</span>
-                <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">DC-DC Feedback Voltage Dividers</h5>
-                <p class="text-xs text-slate-600 mt-2 leading-relaxed">Thin-film 0.1% precision resistors sample output voltages into buck converter error amplifiers, locking sub-1.0V microprocessor core rails.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================================
-           TRACK 2: INDUCTOR (PRERAK) - CLEAN 3D CANVAS
-           =================================================================== -->
-      <section id="track-inductor" class="relative w-full">
-        <!-- FULL-SCREEN PINNED STAGE -->
-        <div id="stage-inductor" class="fullscreen-stage flex flex-col justify-between">
-          
-          <!-- High-Performance Hardware Canvas Element -->
-          <canvas id="canvas-inductor" class="hardware-canvas"></canvas>
-
-          <!-- Spotlight & Vignette -->
-          <div id="spotlight-inductor" class="spotlight-flare"></div>
-          <div class="cinematic-vignette"></div>
-
-          <!-- Top Component Title Card -->
-          <div class="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-24 flex justify-between items-start pointer-events-none">
-            <div class="apple-notif-card pointer-events-auto border-sky-500/30">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-sky-600">02 / Inductor</span>
-                </div>
-                <span class="apple-notif-time">HARDWARE</span>
-              </div>
-              <h2 class="apple-notif-title text-base sm:text-lg">Copper Wire Inductor</h2>
-              <div class="apple-notif-desc">10 mH • Ferrite Choke Core</div>
-            </div>
-          </div>
-
-          <!-- Dynamic Floating HUD Markers Placed Directly on the 3D Canvas Scene -->
-          <div id="hud-ind-coil" class="hud-marker opacity-0 top-[36%] left-[30%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-amber-500/30 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-amber-600">Winding</span>
-                </div>
-                <span class="apple-notif-time">NOW</span>
-              </div>
-              <div class="apple-notif-title">Spiral Copper Wire Coil</div>
-              <div class="apple-notif-desc">Enamelled high-purity copper turns</div>
-            </div>
-          </div>
-
-          <div id="hud-ind-flux" class="hud-marker opacity-0 top-[26%] left-[66%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-sky-400/40 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-sky-600">Magnetic Field</span>
-                </div>
-                <span class="apple-notif-time">ACTIVE</span>
-              </div>
-              <div class="apple-notif-title">Glowing Blue Energy Flux</div>
-              <div class="apple-notif-desc">Dynamic B-field magnetic flux lines</div>
-            </div>
-          </div>
-
-          <div id="hud-ind-core" class="hud-marker opacity-0 top-[62%] left-[52%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-slate-300 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-slate-600">Magnetic Core</span>
-                </div>
-                <span class="apple-notif-time">NOW</span>
-              </div>
-              <div class="apple-notif-title">Ferromagnetic Iron Core</div>
-              <div class="apple-notif-desc">High permeability flux amplifier</div>
-            </div>
-          </div>
-
-          <!-- Bottom Corner Interactive Telemetry / Inspection Badge -->
-          <div class="w-full max-w-7xl mx-auto px-6 sm:px-12 pb-8 flex justify-end items-end pointer-events-none relative z-20">
-            <div class="apple-notif-card pointer-events-auto border-sky-500/30 flex items-center gap-3 py-2.5 px-4 shadow-lg">
-              <div class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
-              <div>
-                <div class="text-[10px] font-mono font-bold tracking-wider text-sky-700 uppercase">360° Hardware View</div>
-                <div class="text-xs font-semibold text-[#1d1d1f]">Scroll to Inspect Anatomy</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ===================================================================
-           SLIDE 2: INDUCTOR THEORY, FARADAY & LENZ'S LAW
-           =================================================================== -->
-      <section id="slide-inductor" class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-y border-slate-200/40 relative">
-        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-
-          <!-- Theory Left Column -->
-          <div class="lg:col-span-7 space-y-6 theory-card-animate">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-sky-500/25 text-sky-700 text-xs font-mono uppercase tracking-wider bg-sky-500/15 shadow-sm">
-              <span class="font-bold">Electromagnetic Principles</span>
-              <span class="text-slate-400">•</span>
-              <span class="text-slate-600">Inductance</span>
-            </div>
-
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f] leading-tight">
-              Faraday's Induction & Lenz's Opposition Law
-            </h2>
-
-            <p class="text-[#515154] leading-relaxed text-sm sm:text-base">
-              An <strong>inductor</strong> resists changes in electric current. According to Faraday's law of induction and Ampère's circuital law, current generates magnetic flux inside the ferromagnetic core. Any change in current induces an opposing back-EMF.
-            </p>
-
-            <!-- Formulas Box as Apple Notification Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="apple-notif-card !max-w-none border-sky-500/25">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-sky-600">Faraday-Lenz Law</span>
-                  </div>
-                  <span class="apple-notif-time">EQUATION</span>
-                </div>
-                <div class="text-2xl font-extrabold text-sky-600 font-mono tracking-wide py-1">v(t) = L · (di / dt)</div>
-                <div class="apple-notif-desc">Induced electromotive force opposes the instantaneous rate of current change (Lenz's Law).</div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-sky-500/25">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-sky-600">Stored Energy</span>
-                  </div>
-                  <span class="apple-notif-time">B-FIELD</span>
-                </div>
-                <div class="text-2xl font-extrabold text-sky-600 font-mono tracking-wide py-1">E = ½ · L · I²</div>
-                <div class="apple-notif-desc">Energy stored reversibly in the magnetic flux volume within core permeability.</div>
-              </div>
-            </div>
-
-            <!-- AC Reactance & Phase -->
-            <div class="apple-notif-card !max-w-none border-sky-500/25 flex items-center justify-between">
-              <div class="flex items-center gap-3">
-                <div>
-                  <div class="apple-notif-header !mb-0">
-                    <span class="apple-app-name text-slate-600">Inductive Reactance (AC Opposition)</span>
-                  </div>
-                  <div class="text-lg font-bold text-[#1d1d1f] font-mono">X_L = 2π · f · L = ωL</div>
-                </div>
-              </div>
-              <div class="apple-notif-pill px-3 py-1 bg-sky-500/15 text-sky-800 text-xs font-mono border border-sky-500/30">
-                Current lags voltage by 90° (ELI)
-              </div>
-            </div>
-
-            <!-- Inductor Construction Points as Apple Notification Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-sky-600">Ferromagnetic Core</span>
-                  </div>
-                  <span class="apple-notif-time">FLUX</span>
-                </div>
-                <div class="apple-notif-desc">Boosts relative permeability (μᵣ) thousands of times over air, concentrating magnetic flux lines.</div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-slate-600">Lamination & Ferrite</span>
-                  </div>
-                  <span class="apple-notif-time">EDDY</span>
-                </div>
-                <div class="apple-notif-desc">Insulated lamination stacks suppress parasitic eddy current losses and high-frequency overheating.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Calculator Right Column -->
-          <div class="lg:col-span-5 theory-card-animate">
-            <div class="apple-notif-card !max-w-none border-sky-500/25 p-6 space-y-6 shadow-lg">
-              <div class="flex items-center justify-between border-b border-slate-200/60 pb-4">
-                <div class="flex items-center gap-3">
-                  <div>
-                    <h3 class="text-base font-bold text-[#1d1d1f]">Inductive Reactance Lab</h3>
-                    <span class="text-[10px] font-mono text-sky-600 uppercase tracking-wider block">AC Simulator</span>
-                  </div>
-                </div>
-                <span class="apple-notif-time bg-sky-500/15 border border-sky-500/30 text-sky-700 px-2.5 py-1 rounded-full font-bold">LIVE</span>
-              </div>
-
-              <!-- Slider 1: Frequency -->
-              <div class="space-y-2">
-                <div class="flex justify-between text-xs font-mono">
-                  <span class="text-slate-600">AC Frequency (f):</span>
-                  <span id="display-freq" class="text-sky-700 font-bold">50 Hz</span>
-                </div>
-                <input id="slider-freq" type="range" min="10" max="1000" value="50" step="10" class="w-full accent-sky-600 cursor-pointer" />
-              </div>
-
-              <!-- Slider 2: Inductance -->
-              <div class="space-y-2">
-                <div class="flex justify-between text-xs font-mono">
-                  <span class="text-slate-600">Inductance (L):</span>
-                  <span id="display-ind" class="text-sky-700 font-bold">25 mH</span>
-                </div>
-                <input id="slider-ind" type="range" min="1" max="100" value="25" step="1" class="w-full accent-sky-600 cursor-pointer" />
-              </div>
-
-              <!-- Calculated Outputs as Apple Notification Cards -->
-              <div class="grid grid-cols-2 gap-3 pt-2">
-                <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-3.5">
-                  <div class="apple-notif-header !mb-1">
-                    <span class="apple-app-name text-[9px] text-sky-700">Reactance (X_L)</span>
-                  </div>
-                  <span id="val-xl" class="text-xl font-extrabold text-sky-700 font-mono block">7.85 Ω</span>
-                </div>
-                <div class="apple-stat-card border-amber-300/60 bg-amber-500/10 p-3.5">
-                  <div class="apple-notif-header !mb-1">
-                    <span class="apple-app-name text-[9px] text-amber-700">Energy @ 1.5A</span>
-                  </div>
-                  <span id="val-el" class="text-xl font-extrabold text-amber-700 font-mono block">28.13 mJ</span>
-                </div>
-              </div>
-
-              <!-- Live AC Waveform Oscilloscope (Inductor: Current Lags by 90° - ELI) -->
-              <div class="space-y-1.5 pt-1">
-                <div class="flex items-center justify-between text-xs font-mono">
-                  <span class="text-slate-600 font-semibold">Live AC Oscilloscope [v(t) vs i(t)]:</span>
-                  <span class="text-[10px] text-sky-700 font-bold bg-sky-500/15 px-2 py-0.5 rounded-full border border-sky-500/30">CURRENT LAGS 90° (ELI)</span>
-                </div>
-                <div class="oscilloscope-screen">
-                  <canvas id="scope-inductor" class="oscilloscope-canvas"></canvas>
-                  <div class="absolute bottom-1.5 left-2 flex items-center gap-3 text-[9px] font-mono text-slate-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur">
-                    <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-sky-400 inline-block"></span> V(t) Voltage (Leads)</span>
-                    <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-amber-400 inline-block"></span> I(t) Current (Lags 90°)</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-sky-400/40 bg-white/30 backdrop-blur-md p-3.5">
-                <div class="flex items-start gap-2.5">
-                  <div class="apple-notif-desc text-sky-950 text-xs leading-relaxed">
-                    <strong class="text-sky-800">Frequency Response:</strong> Reactance increases linearly with frequency. At DC (f = 0), an ideal inductor is a short circuit (X_L = 0 Ω); as frequency rises, back-EMF chokes AC current flow.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Real-World Industry Hardware Applications (Inductor) -->
-        <div class="max-w-6xl w-full mt-12 apple-notif-card !max-w-none border-white/60 p-6 sm:p-7 space-y-4">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
-            <h4 class="text-xs font-mono uppercase tracking-widest text-slate-600 font-bold">Real-World Hardware Engineering Applications</h4>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="industry-app-card border-sky-500/20">
-              <span class="text-[10px] font-mono text-sky-700 font-bold uppercase tracking-wider block">Computer Hardware</span>
-              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Multi-Phase GPU/CPU VRM Power Chokes</h5>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">Molded ferrite power inductors store magnetic energy to smooth switching pulses, delivering 250A ripple-free DC power to AI accelerators.</p>
-            </div>
-            <div class="industry-app-card border-sky-500/20">
-              <span class="text-[10px] font-mono text-sky-700 font-bold uppercase tracking-wider block">Signal Integrity</span>
-              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Common-Mode USB-C / Ethernet EMI Chokes</h5>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">Bifilar wound ferrite toroids present high impedance to common-mode electromagnetic noise while passing differential data signals unscathed.</p>
-            </div>
-            <div class="industry-app-card border-sky-500/20">
-              <span class="text-[10px] font-mono text-sky-700 font-bold uppercase tracking-wider block">Mobile Devices</span>
-              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">Qi Wireless Resonant Charging Coils</h5>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">High-Q planar spiral copper coils magnetically couple at 127 kHz to transfer up to 15W across air gaps via electromagnetic near-field induction.</p>
-            </div>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- ===================================================================
-           TRACK 3: CAPACITOR (SANDHARITRAK) - CLEAN 3D CANVAS
-           =================================================================== -->
-      <section id="track-capacitor" class="relative w-full">
-        <!-- FULL-SCREEN PINNED STAGE -->
-        <div id="stage-capacitor" class="fullscreen-stage flex flex-col justify-between">
-          
-          <!-- High-Performance Hardware Canvas Element -->
-          <canvas id="canvas-capacitor" class="hardware-canvas"></canvas>
-
-          <!-- Spotlight & Vignette -->
-          <div id="spotlight-capacitor" class="spotlight-flare"></div>
-          <div class="cinematic-vignette"></div>
-
-          <!-- Top Component Title Card -->
-          <div class="relative z-20 w-full max-w-7xl mx-auto px-6 sm:px-12 pt-24 flex justify-between items-start pointer-events-none">
-            <div class="apple-notif-card pointer-events-auto border-purple-500/30">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-purple-600">03 / Capacitor</span>
-                </div>
-                <span class="apple-notif-time">HARDWARE</span>
-              </div>
-              <h2 class="apple-notif-title text-base sm:text-lg">Electrolytic Capacitor</h2>
-              <div class="apple-notif-desc">470 µF • 25V Foil Roll</div>
-            </div>
-          </div>
-
-          <!-- Dynamic Floating HUD Markers Placed Directly on the 3D Canvas Scene -->
-          <div id="hud-cap-casing" class="hud-marker opacity-0 top-[28%] left-[32%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-slate-300 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-slate-600">Exterior Shield</span>
-                </div>
-                <span class="apple-notif-time">NOW</span>
-              </div>
-              <div class="apple-notif-title">Shiny Aluminum Shell</div>
-              <div class="apple-notif-desc">Hermetically sealed protective casing</div>
-            </div>
-          </div>
-
-          <div id="hud-cap-foils" class="hud-marker opacity-0 top-[50%] left-[55%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-purple-400/40 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-purple-600">Dielectric Foils</span>
-                </div>
-                <span class="apple-notif-time">ACTIVE</span>
-              </div>
-              <div class="apple-notif-title">Jelly Roll Deconstruction</div>
-              <div class="apple-notif-desc">Tightly wound foil & dielectric paper</div>
-            </div>
-          </div>
-
-          <div id="hud-cap-terminals" class="hud-marker opacity-0 top-[75%] left-[28%] -translate-x-1/2 -translate-y-1/2">
-            <div class="apple-notif-card border-black/10 shadow-lg">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name">Polarized Pins</span>
-                </div>
-                <span class="apple-notif-time">NOW</span>
-              </div>
-              <div class="apple-notif-title">Anode (+) & Cathode (-) Leads</div>
-              <div class="apple-notif-desc">Through-hole polarized terminal pins</div>
-            </div>
-          </div>
-
-          <!-- Bottom Corner Interactive Telemetry / Inspection Badge -->
-          <div class="w-full max-w-7xl mx-auto px-6 sm:px-12 pb-8 flex justify-end items-end pointer-events-none relative z-20">
-            <div class="apple-notif-card pointer-events-auto border-purple-500/30 flex items-center gap-3 py-2.5 px-4 shadow-lg">
-              <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
-              <div>
-                <div class="text-[10px] font-mono font-bold tracking-wider text-purple-700 uppercase">360° Hardware View</div>
-                <div class="text-xs font-semibold text-[#1d1d1f]">Scroll to Inspect Anatomy</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- ===================================================================
+    <!-- ===================================================================
            SLIDE 3: CAPACITOR THEORY & DIELECTRIC CONSTANT
            =================================================================== -->
-      <section id="slide-capacitor" class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-y border-slate-200/40 relative">
-        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <section id="slide-capacitor"
+      class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-y border-slate-200/40 relative">
+      <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-          <!-- Theory Left Column -->
-          <div class="lg:col-span-7 space-y-6 theory-card-animate">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-purple-500/25 text-purple-700 text-xs font-mono uppercase tracking-wider bg-purple-500/15 shadow-sm">
-              <span class="font-bold">Electrostatic Storage</span>
-              <span class="text-slate-400">•</span>
-              <span class="text-slate-600">Capacitance</span>
+        <!-- Theory Left Column -->
+        <div class="lg:col-span-7 space-y-6 theory-card-animate">
+          <div
+            class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-purple-500/25 text-purple-700 text-xs font-mono uppercase tracking-wider bg-purple-500/15 shadow-sm">
+            <span class="font-bold">Electrostatic Storage</span>
+            <span class="text-slate-400">•</span>
+            <span class="text-slate-600">Capacitance</span>
+          </div>
+
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f] leading-tight">
+            Dielectric Permittivity & Charge Polarization
+          </h2>
+
+          <p class="text-[#515154] leading-relaxed text-sm sm:text-base">
+            A <strong>capacitor</strong> stores electrical energy in an electrostatic field between conductive plates
+            separated by a dielectric medium. When a voltage is applied, equal and opposite charges polarize on the foil
+            surfaces, resisting sudden voltage changes.
+          </p>
+
+          <!-- Formulas Box as Apple Notification Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="apple-notif-card !max-w-none border-purple-500/25">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-purple-600">Capacitance Formula</span>
+                </div>
+                <span class="apple-notif-time">EQUATION</span>
+              </div>
+              <div class="text-2xl font-extrabold text-purple-600 font-mono tracking-wide py-1">C = (ε · A) / d</div>
+              <div class="apple-notif-desc">Where ε = ε₀·εᵣ is dielectric permittivity, A is plate area, and d is
+                nanometer thickness.</div>
             </div>
 
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f] leading-tight">
-              Dielectric Permittivity & Charge Polarization
-            </h2>
-
-            <p class="text-[#515154] leading-relaxed text-sm sm:text-base">
-              A <strong>capacitor</strong> stores electrical energy in an electrostatic field between conductive plates separated by a dielectric medium. When a voltage is applied, equal and opposite charges polarize on the foil surfaces, resisting sudden voltage changes.
-            </p>
-
-            <!-- Formulas Box as Apple Notification Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="apple-notif-card !max-w-none border-purple-500/25">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-purple-600">Capacitance Formula</span>
-                  </div>
-                  <span class="apple-notif-time">EQUATION</span>
+            <div class="apple-notif-card !max-w-none border-purple-500/25">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-purple-600">Stored Energy</span>
                 </div>
-                <div class="text-2xl font-extrabold text-purple-600 font-mono tracking-wide py-1">C = (ε · A) / d</div>
-                <div class="apple-notif-desc">Where ε = ε₀·εᵣ is dielectric permittivity, A is plate area, and d is nanometer thickness.</div>
+                <span class="apple-notif-time">E-FIELD</span>
               </div>
+              <div class="text-2xl font-extrabold text-purple-600 font-mono tracking-wide py-1">E = ½ · C · V²</div>
+              <div class="apple-notif-desc">Energy stored across the dielectric dipole alignment under electric
+                potential V.</div>
+            </div>
+          </div>
 
-              <div class="apple-notif-card !max-w-none border-purple-500/25">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-purple-600">Stored Energy</span>
-                  </div>
-                  <span class="apple-notif-time">E-FIELD</span>
+          <!-- AC Reactance & Phase -->
+          <div class="apple-notif-card !max-w-none border-purple-500/25 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div>
+                <div class="apple-notif-header !mb-0">
+                  <span class="apple-app-name text-slate-600">Capacitive Reactance (AC Inversion)</span>
                 </div>
-                <div class="text-2xl font-extrabold text-purple-600 font-mono tracking-wide py-1">E = ½ · C · V²</div>
-                <div class="apple-notif-desc">Energy stored across the dielectric dipole alignment under electric potential V.</div>
+                <div class="text-lg font-bold text-[#1d1d1f] font-mono">X_C = 1 / (2π · f · C) = 1 / ωC</div>
               </div>
             </div>
+            <div
+              class="apple-notif-pill px-3 py-1 bg-purple-500/15 text-purple-800 text-xs font-mono border border-purple-500/30">
+              Current leads voltage by 90° (ICE)
+            </div>
+          </div>
 
-            <!-- AC Reactance & Phase -->
-            <div class="apple-notif-card !max-w-none border-purple-500/25 flex items-center justify-between">
+          <!-- Capacitor Construction Points as Apple Notification Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-purple-600">Anodized Al₂O₃</span>
+                </div>
+                <span class="apple-notif-time">NANO</span>
+              </div>
+              <div class="apple-notif-desc">Ultrathin molecular dielectric barrier layer (&lt; 100 nm) yielding extreme
+                capacitance density.</div>
+            </div>
+
+            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+              <div class="apple-notif-header">
+                <div class="apple-notif-app">
+                  <span class="apple-app-name text-slate-600">Electrolyte Contact</span>
+                </div>
+                <span class="apple-notif-time">IONIC</span>
+              </div>
+              <div class="apple-notif-desc">Conductive liquid/gel electrolyte maintains atomic contact into microscopic
+                etched foil crevices.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Calculator Right Column -->
+        <div class="lg:col-span-5 theory-card-animate">
+          <div class="apple-notif-card !max-w-none border-purple-500/25 p-6 space-y-6 shadow-lg">
+            <div class="flex items-center justify-between border-b border-slate-200/60 pb-4">
               <div class="flex items-center gap-3">
                 <div>
-                  <div class="apple-notif-header !mb-0">
-                    <span class="apple-app-name text-slate-600">Capacitive Reactance (AC Inversion)</span>
-                  </div>
-                  <div class="text-lg font-bold text-[#1d1d1f] font-mono">X_C = 1 / (2π · f · C) = 1 / ωC</div>
+                  <h3 class="text-base font-bold text-[#1d1d1f]">Capacitive Reactance Lab</h3>
+                  <span class="text-[10px] font-mono text-purple-600 uppercase tracking-wider block">Dielectric
+                    Simulator</span>
                 </div>
               </div>
-              <div class="apple-notif-pill px-3 py-1 bg-purple-500/15 text-purple-800 text-xs font-mono border border-purple-500/30">
-                Current leads voltage by 90° (ICE)
+              <span
+                class="apple-notif-time bg-purple-500/15 border border-purple-500/30 text-purple-700 px-2.5 py-1 rounded-full font-bold">LIVE</span>
+            </div>
+
+            <!-- Slider 1: Frequency -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-600">AC Frequency (f):</span>
+                <span id="display-cap-freq" class="text-purple-700 font-bold">100 Hz</span>
+              </div>
+              <input id="slider-cap-freq" type="range" min="10" max="2000" value="100" step="10"
+                class="w-full accent-purple-600 cursor-pointer" />
+            </div>
+
+            <!-- Slider 2: Capacitance -->
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs font-mono">
+                <span class="text-slate-600">Capacitance (C):</span>
+                <span id="display-cap-val" class="text-purple-700 font-bold">220 µF</span>
+              </div>
+              <input id="slider-cap-val" type="range" min="10" max="1000" value="220" step="10"
+                class="w-full accent-purple-600 cursor-pointer" />
+            </div>
+
+            <!-- Calculated Outputs as Apple Notification Cards -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="apple-stat-card border-purple-300/60 bg-purple-500/10 p-3.5">
+                <div class="apple-notif-header !mb-1">
+                  <span class="apple-app-name text-[9px] text-purple-700">Reactance (X_C)</span>
+                </div>
+                <span id="val-xc" class="text-xl font-extrabold text-purple-700 font-mono block">7.23 Ω</span>
+              </div>
+              <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-3.5">
+                <div class="apple-notif-header !mb-1">
+                  <span class="apple-app-name text-[9px] text-sky-700">Energy @ 12V</span>
+                </div>
+                <span id="val-ec" class="text-xl font-extrabold text-sky-700 font-mono block">15.84 mJ</span>
               </div>
             </div>
 
-            <!-- Capacitor Construction Points as Apple Notification Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-purple-600">Anodized Al₂O₃</span>
-                  </div>
-                  <span class="apple-notif-time">NANO</span>
-                </div>
-                <div class="apple-notif-desc">Ultrathin molecular dielectric barrier layer (&lt; 100 nm) yielding extreme capacitance density.</div>
+            <!-- Live AC Waveform Oscilloscope (Capacitor: Current Leads by 90° - ICE) -->
+            <div class="space-y-1.5 pt-1">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-slate-600 font-semibold">Live AC Oscilloscope [v(t) vs i(t)]:</span>
+                <span
+                  class="text-[10px] text-purple-700 font-bold bg-purple-500/15 px-2 py-0.5 rounded-full border border-purple-500/30">CURRENT
+                  LEADS 90° (ICE)</span>
               </div>
-
-              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-                <div class="apple-notif-header">
-                  <div class="apple-notif-app">
-                    <span class="apple-app-name text-slate-600">Electrolyte Contact</span>
-                  </div>
-                  <span class="apple-notif-time">IONIC</span>
-                </div>
-                <div class="apple-notif-desc">Conductive liquid/gel electrolyte maintains atomic contact into microscopic etched foil crevices.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Calculator Right Column -->
-          <div class="lg:col-span-5 theory-card-animate">
-            <div class="apple-notif-card !max-w-none border-purple-500/25 p-6 space-y-6 shadow-lg">
-              <div class="flex items-center justify-between border-b border-slate-200/60 pb-4">
-                <div class="flex items-center gap-3">
-                  <div>
-                    <h3 class="text-base font-bold text-[#1d1d1f]">Capacitive Reactance Lab</h3>
-                    <span class="text-[10px] font-mono text-purple-600 uppercase tracking-wider block">Dielectric Simulator</span>
-                  </div>
-                </div>
-                <span class="apple-notif-time bg-purple-500/15 border border-purple-500/30 text-purple-700 px-2.5 py-1 rounded-full font-bold">LIVE</span>
-              </div>
-
-              <!-- Slider 1: Frequency -->
-              <div class="space-y-2">
-                <div class="flex justify-between text-xs font-mono">
-                  <span class="text-slate-600">AC Frequency (f):</span>
-                  <span id="display-cap-freq" class="text-purple-700 font-bold">100 Hz</span>
-                </div>
-                <input id="slider-cap-freq" type="range" min="10" max="2000" value="100" step="10" class="w-full accent-purple-600 cursor-pointer" />
-              </div>
-
-              <!-- Slider 2: Capacitance -->
-              <div class="space-y-2">
-                <div class="flex justify-between text-xs font-mono">
-                  <span class="text-slate-600">Capacitance (C):</span>
-                  <span id="display-cap-val" class="text-purple-700 font-bold">220 µF</span>
-                </div>
-                <input id="slider-cap-val" type="range" min="10" max="1000" value="220" step="10" class="w-full accent-purple-600 cursor-pointer" />
-              </div>
-
-              <!-- Calculated Outputs as Apple Notification Cards -->
-              <div class="grid grid-cols-2 gap-3 pt-2">
-                <div class="apple-stat-card border-purple-300/60 bg-purple-500/10 p-3.5">
-                  <div class="apple-notif-header !mb-1">
-                    <span class="apple-app-name text-[9px] text-purple-700">Reactance (X_C)</span>
-                  </div>
-                  <span id="val-xc" class="text-xl font-extrabold text-purple-700 font-mono block">7.23 Ω</span>
-                </div>
-                <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-3.5">
-                  <div class="apple-notif-header !mb-1">
-                    <span class="apple-app-name text-[9px] text-sky-700">Energy @ 12V</span>
-                  </div>
-                  <span id="val-ec" class="text-xl font-extrabold text-sky-700 font-mono block">15.84 mJ</span>
-                </div>
-              </div>
-
-              <!-- Live AC Waveform Oscilloscope (Capacitor: Current Leads by 90° - ICE) -->
-              <div class="space-y-1.5 pt-1">
-                <div class="flex items-center justify-between text-xs font-mono">
-                  <span class="text-slate-600 font-semibold">Live AC Oscilloscope [v(t) vs i(t)]:</span>
-                  <span class="text-[10px] text-purple-700 font-bold bg-purple-500/15 px-2 py-0.5 rounded-full border border-purple-500/30">CURRENT LEADS 90° (ICE)</span>
-                </div>
-                <div class="oscilloscope-screen">
-                  <canvas id="scope-capacitor" class="oscilloscope-canvas"></canvas>
-                  <div class="absolute bottom-1.5 left-2 flex items-center gap-3 text-[9px] font-mono text-slate-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur">
-                    <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-purple-400 inline-block"></span> V(t) Voltage</span>
-                    <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-sky-400 inline-block"></span> I(t) Current (Leads 90°)</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="apple-notif-card !max-w-none border-purple-400/40 bg-white/30 backdrop-blur-md p-3.5">
-                <div class="flex items-start gap-2.5">
-                  <div class="apple-notif-desc text-purple-950 text-xs leading-relaxed">
-                    <strong class="text-purple-800">Frequency Inversion:</strong> Reactance is inversely proportional to frequency. At DC (f = 0), a capacitor is an open circuit (X_C = ∞ Ω); at high frequencies, displacement current passes AC with minimal impedance.
-                  </div>
+              <div class="oscilloscope-screen">
+                <canvas id="scope-capacitor" class="oscilloscope-canvas"></canvas>
+                <div
+                  class="absolute bottom-1.5 left-2 flex items-center gap-3 text-[9px] font-mono text-slate-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur">
+                  <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-purple-400 inline-block"></span> V(t)
+                    Voltage</span>
+                  <span class="flex items-center gap-1"><span class="w-2 h-0.5 bg-sky-400 inline-block"></span> I(t)
+                    Current (Leads 90°)</span>
                 </div>
               </div>
             </div>
-          </div>
 
-        </div>
-
-        <!-- Real-World Industry Hardware Applications (Capacitor) -->
-        <div class="max-w-6xl w-full mt-12 apple-notif-card !max-w-none border-white/60 p-6 sm:p-7 space-y-4">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
-            <h4 class="text-xs font-mono uppercase tracking-widest text-slate-600 font-bold">Real-World Hardware Engineering Applications</h4>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="industry-app-card border-purple-500/20">
-              <span class="text-[10px] font-mono text-purple-700 font-bold uppercase tracking-wider block">Smartphone SoCs</span>
-              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">High-Density MLCC Decoupling Arrays</h5>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">Tiny 0201/01005 ceramic capacitors mounted directly under BGA processor packages supply charge within picoseconds during gigahertz clock surges.</p>
-            </div>
-            <div class="industry-app-card border-purple-500/20">
-              <span class="text-[10px] font-mono text-purple-700 font-bold uppercase tracking-wider block">Electric Vehicles</span>
-              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">DC-Link Inverter Snubber Film Capacitors</h5>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">Self-healing metallized polypropylene film capacitors absorb massive inductive spikes from 800V silicon carbide (SiC) motor drive inverters.</p>
-            </div>
-            <div class="industry-app-card border-purple-500/20">
-              <span class="text-[10px] font-mono text-purple-700 font-bold uppercase tracking-wider block">5G Communications</span>
-              <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">RF Antenna Matching & DC-Blocking</h5>
-              <p class="text-xs text-slate-600 mt-2 leading-relaxed">High-Q multilayer capacitors isolate DC bias voltages between RF amplifier stages while matching impedance to 50 Ω transmission lines up to 40 GHz.</p>
+            <div class="apple-notif-card !max-w-none border-purple-400/40 bg-white/30 backdrop-blur-md p-3.5">
+              <div class="flex items-start gap-2.5">
+                <div class="apple-notif-desc text-purple-950 text-xs leading-relaxed">
+                  <strong class="text-purple-800">Frequency Inversion:</strong> Reactance is inversely proportional to
+                  frequency. At DC (f = 0), a capacitor is an open circuit (X_C = ∞ Ω); at high frequencies,
+                  displacement current passes AC with minimal impedance.
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-      </section>
+      </div>
 
-      <!-- ===================================================================
+      <!-- Real-World Industry Hardware Applications (Capacitor) -->
+      <div class="max-w-6xl w-full mt-12 apple-notif-card !max-w-none border-white/60 p-6 sm:p-7 space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+          <h4 class="text-xs font-mono uppercase tracking-widest text-slate-600 font-bold">Real-World Hardware
+            Engineering Applications</h4>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="industry-app-card border-purple-500/20">
+            <span class="text-[10px] font-mono text-purple-700 font-bold uppercase tracking-wider block">Smartphone
+              SoCs</span>
+            <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">High-Density MLCC Decoupling Arrays</h5>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Tiny 0201/01005 ceramic capacitors mounted directly
+              under BGA processor packages supply charge within picoseconds during gigahertz clock surges.</p>
+          </div>
+          <div class="industry-app-card border-purple-500/20">
+            <span class="text-[10px] font-mono text-purple-700 font-bold uppercase tracking-wider block">Electric
+              Vehicles</span>
+            <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">DC-Link Inverter Snubber Film Capacitors</h5>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">Self-healing metallized polypropylene film capacitors
+              absorb massive inductive spikes from 800V silicon carbide (SiC) motor drive inverters.</p>
+          </div>
+          <div class="industry-app-card border-purple-500/20">
+            <span class="text-[10px] font-mono text-purple-700 font-bold uppercase tracking-wider block">5G
+              Communications</span>
+            <h5 class="text-sm font-bold text-[#1d1d1f] mt-1">RF Antenna Matching & DC-Blocking</h5>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">High-Q multilayer capacitors isolate DC bias voltages
+              between RF amplifier stages while matching impedance to 50 Ω transmission lines up to 40 GHz.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
            SLIDE 4: COMPREHENSIVE RLC COMPARISON MATRIX
            =================================================================== -->
-      <section id="slide-summary" class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-t border-slate-200/40 relative">
-        <div class="max-w-6xl w-full space-y-10">
+    <section id="slide-summary"
+      class="scroll-mt-20 min-h-screen w-full flex flex-col items-center justify-center px-6 py-28 bg-transparent border-t border-slate-200/40 relative">
+      <div class="max-w-6xl w-full space-y-10">
 
-          <div class="text-center space-y-3">
-            <div class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-emerald-500/25 text-emerald-700 text-xs font-mono uppercase tracking-widest bg-emerald-500/15 shadow-sm">
-              <span class="font-bold">Synthesis & Comparative Analysis</span>
-            </div>
-            <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f]">
-              RLC Passive Component Matrix
-            </h2>
-            <p class="text-[#515154] max-w-2xl mx-auto text-sm sm:text-base">
-              A side-by-side engineering breakdown of fundamental equations, phase responses, and electrical characteristics.
-            </p>
+        <div class="text-center space-y-3">
+          <div
+            class="inline-flex items-center gap-2.5 px-4 py-1.5 apple-notif-pill border border-emerald-500/25 text-emerald-700 text-xs font-mono uppercase tracking-widest bg-emerald-500/15 shadow-sm">
+            <span class="font-bold">Synthesis & Comparative Analysis</span>
           </div>
-
-          <!-- Comparison Table -->
-          <div class="overflow-x-auto apple-table-container">
-            <table class="w-full text-left text-sm border-collapse font-sans">
-              <thead>
-                <tr class="border-b border-slate-200/80 bg-white/40 backdrop-blur font-mono text-xs uppercase text-slate-700">
-                  <th class="p-4 font-bold">Parameter</th>
-                  <th class="p-4 font-bold text-amber-700">Resistor (R)</th>
-                  <th class="p-4 font-bold text-sky-700">Inductor (L)</th>
-                  <th class="p-4 font-bold text-purple-700">Capacitor (C)</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-200/60 text-slate-700">
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Standard SI Unit</td>
-                  <td class="p-4 font-mono text-amber-700">Ohm (Ω)</td>
-                  <td class="p-4 font-mono text-sky-700">Henry (H)</td>
-                  <td class="p-4 font-mono text-purple-700">Farad (F)</td>
-                </tr>
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Governing Differential Law</td>
-                  <td class="p-4 font-mono text-amber-700 text-xs">v(t) = R · i(t)</td>
-                  <td class="p-4 font-mono text-sky-700 text-xs">v(t) = L · (di / dt)</td>
-                  <td class="p-4 font-mono text-purple-700 text-xs">i(t) = C · (dv / dt)</td>
-                </tr>
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Impedance Z(jω)</td>
-                  <td class="p-4 font-mono text-amber-700">Z = R</td>
-                  <td class="p-4 font-mono text-sky-700">Z = +jωL</td>
-                  <td class="p-4 font-mono text-purple-700">Z = -j / (ωC)</td>
-                </tr>
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">V - I AC Phase Shift</td>
-                  <td class="p-4 text-slate-700 font-medium">φ = 0° (In Phase)</td>
-                  <td class="p-4 text-sky-700 font-medium">Current lags Voltage by 90°</td>
-                  <td class="p-4 text-purple-700 font-medium">Current leads Voltage by 90°</td>
-                </tr>
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Energy Mechanism</td>
-                  <td class="p-4 text-slate-600 font-medium">Dissipated irreversible heat (Joule)</td>
-                  <td class="p-4 text-sky-700 font-medium">Stored in Magnetic B-Field (½LI²)</td>
-                  <td class="p-4 text-purple-700 font-medium">Stored in Electrostatic E-Field (½CV²)</td>
-                </tr>
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">DC Steady-State (f = 0)</td>
-                  <td class="p-4 text-slate-700 font-medium">Constant Resistance (R)</td>
-                  <td class="p-4">
-                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 font-mono text-xs font-bold">Short Circuit (0 Ω)</span>
-                  </td>
-                  <td class="p-4">
-                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-800 border border-rose-500/30 font-mono text-xs font-bold">Open Circuit (∞ Ω)</span>
-                  </td>
-                </tr>
-                <tr class="hover:bg-slate-50/50 transition">
-                  <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">High Frequency (f → ∞)</td>
-                  <td class="p-4 text-slate-700 font-medium">Parasitics emerge</td>
-                  <td class="p-4">
-                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-800 border border-rose-500/30 font-mono text-xs font-bold">Open Circuit (Choke)</span>
-                  </td>
-                  <td class="p-4">
-                    <span class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 font-mono text-xs font-bold">Short Circuit (AC Pass)</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Combined Series RLC Resonance Simulator Module -->
-          <div class="apple-notif-card !max-w-none border-emerald-500/30 p-6 sm:p-8 shadow-lg space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
-              <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-[10px] font-mono uppercase tracking-widest font-bold mb-1">
-                  Interactive Lab • Resonance Peak
-                </div>
-                <h3 class="text-xl sm:text-2xl font-extrabold text-[#1d1d1f]">Series RLC Resonant Frequency Simulator</h3>
-                <p class="text-xs text-slate-500 font-mono mt-1">At resonance (X_L = X_C), circuit impedance drops to pure resistance Z = R and current reaches maximum peak.</p>
-              </div>
-              <div class="flex flex-col items-end">
-                <span class="text-xs font-mono text-slate-500">Resonant Frequency (f₀):</span>
-                <span id="display-res-f0" class="text-2xl font-mono font-black text-emerald-600">3183.1 Hz</span>
-              </div>
-            </div>
-
-            <!-- Resonance Curve Canvas & Controls Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-              <!-- Left: Live Resonance Frequency Response Curve Canvas -->
-              <div class="lg:col-span-7 space-y-2">
-                <div class="flex justify-between items-center text-xs font-mono text-slate-600">
-                  <span class="font-semibold">Current Frequency Response Curve I(f):</span>
-                  <span class="text-[10px] text-emerald-700 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30">PEAK AT f = f₀</span>
-                </div>
-                <div class="oscilloscope-screen p-1">
-                  <canvas id="canvas-resonance" class="w-full h-44 block"></canvas>
-                </div>
-                <div class="flex justify-between text-[10px] font-mono text-slate-400 px-1">
-                  <span>0 Hz (DC Block)</span>
-                  <span>f₀ (Resonance Peak: Z = R)</span>
-                  <span>High Frequency (Inductive Choke)</span>
-                </div>
-              </div>
-
-              <!-- Right: Parameter Sliders & Live Derived Metrics -->
-              <div class="lg:col-span-5 space-y-4">
-                <!-- Slider R -->
-                <div class="space-y-1">
-                  <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-600">Resistance (R):</span>
-                    <span id="display-res-r" class="text-amber-700 font-bold">10 Ω</span>
-                  </div>
-                  <input id="slider-res-r" type="range" min="1" max="100" value="10" step="1" class="w-full accent-amber-600 cursor-pointer" />
-                </div>
-
-                <!-- Slider L -->
-                <div class="space-y-1">
-                  <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-600">Inductance (L):</span>
-                    <span id="display-res-l" class="text-sky-700 font-bold">25 mH</span>
-                  </div>
-                  <input id="slider-res-l" type="range" min="1" max="100" value="25" step="1" class="w-full accent-sky-600 cursor-pointer" />
-                </div>
-
-                <!-- Slider C -->
-                <div class="space-y-1">
-                  <div class="flex justify-between text-xs font-mono">
-                    <span class="text-slate-600">Capacitance (C):</span>
-                    <span id="display-res-c" class="text-purple-700 font-bold">0.10 µF</span>
-                  </div>
-                  <input id="slider-res-c" type="range" min="0.05" max="5.0" value="0.10" step="0.05" class="w-full accent-purple-600 cursor-pointer" />
-                </div>
-
-                <!-- Derived Metrics 2x2 Grid -->
-                <div class="grid grid-cols-2 gap-2.5 pt-2 text-xs font-mono">
-                  <div class="apple-stat-card border-emerald-300/60 bg-emerald-500/10 p-3">
-                    <span class="text-[9px] text-emerald-800 uppercase block font-semibold">Quality Factor (Q)</span>
-                    <span id="display-res-q" class="text-lg font-extrabold text-emerald-800 block">50.0</span>
-                  </div>
-                  <div class="apple-stat-card border-slate-300/60 bg-white/20 p-3">
-                    <span class="text-[9px] text-slate-600 uppercase block font-semibold">Bandwidth (BW = f₀/Q)</span>
-                    <span id="display-res-bw" class="text-lg font-extrabold text-slate-800 block">63.7 Hz</span>
-                  </div>
-                  <div class="apple-stat-card border-slate-300/60 bg-white/20 p-3">
-                    <span class="text-[9px] text-slate-600 uppercase block font-semibold">Resonant Angular Freq</span>
-                    <span id="display-res-w0" class="text-base font-extrabold text-slate-800 block">20.0 krad/s</span>
-                  </div>
-                  <div class="apple-stat-card border-slate-300/60 bg-white/20 p-3">
-                    <span class="text-[9px] text-slate-600 uppercase block font-semibold">Impedance @ f₀</span>
-                    <span id="display-res-z0" class="text-base font-extrabold text-slate-800 block">10.0 Ω</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mnemonic Summary (ELI the ICE man) -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div class="apple-notif-card !max-w-none border-sky-300/70 p-5 rounded-2xl flex items-center gap-4 shadow-md">
-              <div class="text-3xl font-mono font-extrabold text-sky-700 bg-sky-500/15 p-4 rounded-xl border border-sky-500/30 shadow-sm">
-                ELI
-              </div>
-              <div class="text-xs text-[#515154] leading-relaxed font-mono">
-                <span class="text-sky-700 font-bold block text-sm">Inductive Mnemonic</span>
-                <strong>E</strong>MF leads <strong>L</strong> (Inductor) current <strong>I</strong>. Voltage peaks 90° ahead of current flow.
-              </div>
-            </div>
-
-            <div class="apple-notif-card !max-w-none border-purple-300/70 p-5 rounded-2xl flex items-center gap-4 shadow-md">
-              <div class="text-3xl font-mono font-extrabold text-purple-700 bg-purple-500/15 p-4 rounded-xl border border-purple-500/30 shadow-sm">
-                ICE
-              </div>
-              <div class="text-xs text-[#515154] leading-relaxed font-mono">
-                <span class="text-purple-700 font-bold block text-sm">Capacitive Mnemonic</span>
-                Current <strong>I</strong> leads <strong>C</strong> (Capacitor) <strong>E</strong>MF. Charge movement leads terminal voltage by 90°.
-              </div>
-            </div>
-          </div>
-
-          <!-- Footer Presentation Info -->
-          <footer class="pt-10 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 font-mono gap-4">
-            <div>
-              Electrical Engineering Presentation • RLC 3D Interactive Web Experience
-            </div>
-            <div class="flex items-center gap-4">
-              <button data-jump="hero" class="text-sky-600 hover:text-sky-800 font-bold hover:underline transition">↑ Back to Top</button>
-            </div>
-          </footer>
-
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-[#1d1d1f]">
+            RLC Passive Component Matrix
+          </h2>
+          <p class="text-[#515154] max-w-2xl mx-auto text-sm sm:text-base">
+            A side-by-side engineering breakdown of fundamental equations, phase responses, and electrical
+            characteristics.
+          </p>
         </div>
-      </section>
 
-    </main>
+        <!-- Comparison Table -->
+        <div class="overflow-x-auto apple-table-container">
+          <table class="w-full text-left text-sm border-collapse font-sans">
+            <thead>
+              <tr
+                class="border-b border-slate-200/80 bg-white/40 backdrop-blur font-mono text-xs uppercase text-slate-700">
+                <th class="p-4 font-bold">Parameter</th>
+                <th class="p-4 font-bold text-amber-700">Resistor (R)</th>
+                <th class="p-4 font-bold text-sky-700">Inductor (L)</th>
+                <th class="p-4 font-bold text-purple-700">Capacitor (C)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200/60 text-slate-700">
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Standard SI Unit</td>
+                <td class="p-4 font-mono text-amber-700">Ohm (Ω)</td>
+                <td class="p-4 font-mono text-sky-700">Henry (H)</td>
+                <td class="p-4 font-mono text-purple-700">Farad (F)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Governing Differential Law</td>
+                <td class="p-4 font-mono text-amber-700 text-xs">v(t) = R · i(t)</td>
+                <td class="p-4 font-mono text-sky-700 text-xs">v(t) = L · (di / dt)</td>
+                <td class="p-4 font-mono text-purple-700 text-xs">i(t) = C · (dv / dt)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Impedance Z(jω)</td>
+                <td class="p-4 font-mono text-amber-700">Z = R</td>
+                <td class="p-4 font-mono text-sky-700">Z = +jωL</td>
+                <td class="p-4 font-mono text-purple-700">Z = -j / (ωC)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">V - I AC Phase Shift</td>
+                <td class="p-4 text-slate-700 font-medium">φ = 0° (In Phase)</td>
+                <td class="p-4 text-sky-700 font-medium">Current lags Voltage by 90°</td>
+                <td class="p-4 text-purple-700 font-medium">Current leads Voltage by 90°</td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Energy Mechanism</td>
+                <td class="p-4 text-slate-600 font-medium">Dissipated irreversible heat (Joule)</td>
+                <td class="p-4 text-sky-700 font-medium">Stored in Magnetic B-Field (½LI²)</td>
+                <td class="p-4 text-purple-700 font-medium">Stored in Electrostatic E-Field (½CV²)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">DC Steady-State (f = 0)</td>
+                <td class="p-4 text-slate-700 font-medium">Constant Resistance (R)</td>
+                <td class="p-4">
+                  <span
+                    class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 font-mono text-xs font-bold">Short
+                    Circuit (0 Ω)</span>
+                </td>
+                <td class="p-4">
+                  <span
+                    class="inline-block px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-800 border border-rose-500/30 font-mono text-xs font-bold">Open
+                    Circuit (∞ Ω)</span>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">High Frequency (f → ∞)</td>
+                <td class="p-4 text-slate-700 font-medium">Parasitics emerge</td>
+                <td class="p-4">
+                  <span
+                    class="inline-block px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-800 border border-rose-500/30 font-mono text-xs font-bold">Open
+                    Circuit (Choke)</span>
+                </td>
+                <td class="p-4">
+                  <span
+                    class="inline-block px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/30 font-mono text-xs font-bold">Short
+                    Circuit (AC Pass)</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+        <!-- Combined Series RLC Resonance Simulator Module -->
+        <div class="apple-notif-card !max-w-none border-emerald-500/30 p-6 sm:p-8 shadow-lg space-y-6">
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200/60 pb-5">
+            <div>
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-800 text-[10px] font-mono uppercase tracking-widest font-bold mb-1">
+                Interactive Lab • Resonance Peak
+              </div>
+              <h3 class="text-xl sm:text-2xl font-extrabold text-[#1d1d1f]">Series RLC Resonant Frequency Simulator</h3>
+              <p class="text-xs text-slate-500 font-mono mt-1">At resonance (X_L = X_C), circuit impedance drops to pure
+                resistance Z = R and current reaches maximum peak.</p>
+            </div>
+            <div class="flex flex-col items-end">
+              <span class="text-xs font-mono text-slate-500">Resonant Frequency (f₀):</span>
+              <span id="display-res-f0" class="text-2xl font-mono font-black text-emerald-600">3183.1 Hz</span>
+            </div>
+          </div>
+
+          <!-- Resonance Curve Canvas & Controls Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <!-- Left: Live Resonance Frequency Response Curve Canvas -->
+            <div class="lg:col-span-7 space-y-2">
+              <div class="flex justify-between items-center text-xs font-mono text-slate-600">
+                <span class="font-semibold">Current Frequency Response Curve I(f):</span>
+                <span
+                  class="text-[10px] text-emerald-700 bg-emerald-500/15 px-2 py-0.5 rounded border border-emerald-500/30">PEAK
+                  AT f = f₀</span>
+              </div>
+              <div class="oscilloscope-screen p-1">
+                <canvas id="canvas-resonance" class="w-full h-44 block"></canvas>
+              </div>
+              <div class="flex justify-between text-[10px] font-mono text-slate-400 px-1">
+                <span>0 Hz (DC Block)</span>
+                <span>f₀ (Resonance Peak: Z = R)</span>
+                <span>High Frequency (Inductive Choke)</span>
+              </div>
+            </div>
+
+            <!-- Right: Parameter Sliders & Live Derived Metrics -->
+            <div class="lg:col-span-5 space-y-4">
+              <!-- Slider R -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-mono">
+                  <span class="text-slate-600">Resistance (R):</span>
+                  <span id="display-res-r" class="text-amber-700 font-bold">10 Ω</span>
+                </div>
+                <input id="slider-res-r" type="range" min="1" max="100" value="10" step="1"
+                  class="w-full accent-amber-600 cursor-pointer" />
+              </div>
+
+              <!-- Slider L -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-mono">
+                  <span class="text-slate-600">Inductance (L):</span>
+                  <span id="display-res-l" class="text-sky-700 font-bold">25 mH</span>
+                </div>
+                <input id="slider-res-l" type="range" min="1" max="100" value="25" step="1"
+                  class="w-full accent-sky-600 cursor-pointer" />
+              </div>
+
+              <!-- Slider C -->
+              <div class="space-y-1">
+                <div class="flex justify-between text-xs font-mono">
+                  <span class="text-slate-600">Capacitance (C):</span>
+                  <span id="display-res-c" class="text-purple-700 font-bold">0.10 µF</span>
+                </div>
+                <input id="slider-res-c" type="range" min="0.05" max="5.0" value="0.10" step="0.05"
+                  class="w-full accent-purple-600 cursor-pointer" />
+              </div>
+
+              <!-- Derived Metrics 2x2 Grid -->
+              <div class="grid grid-cols-2 gap-2.5 pt-2 text-xs font-mono">
+                <div class="apple-stat-card border-emerald-300/60 bg-emerald-500/10 p-3">
+                  <span class="text-[9px] text-emerald-800 uppercase block font-semibold">Quality Factor (Q)</span>
+                  <span id="display-res-q" class="text-lg font-extrabold text-emerald-800 block">50.0</span>
+                </div>
+                <div class="apple-stat-card border-slate-300/60 bg-white/20 p-3">
+                  <span class="text-[9px] text-slate-600 uppercase block font-semibold">Bandwidth (BW = f₀/Q)</span>
+                  <span id="display-res-bw" class="text-lg font-extrabold text-slate-800 block">63.7 Hz</span>
+                </div>
+                <div class="apple-stat-card border-slate-300/60 bg-white/20 p-3">
+                  <span class="text-[9px] text-slate-600 uppercase block font-semibold">Resonant Angular Freq</span>
+                  <span id="display-res-w0" class="text-base font-extrabold text-slate-800 block">20.0 krad/s</span>
+                </div>
+                <div class="apple-stat-card border-slate-300/60 bg-white/20 p-3">
+                  <span class="text-[9px] text-slate-600 uppercase block font-semibold">Impedance @ f₀</span>
+                  <span id="display-res-z0" class="text-base font-extrabold text-slate-800 block">10.0 Ω</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mnemonic Summary (ELI the ICE man) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="apple-notif-card !max-w-none border-sky-300/70 p-5 rounded-2xl flex items-center gap-4 shadow-md">
+            <div
+              class="text-3xl font-mono font-extrabold text-sky-700 bg-sky-500/15 p-4 rounded-xl border border-sky-500/30 shadow-sm">
+              ELI
+            </div>
+            <div class="text-xs text-[#515154] leading-relaxed font-mono">
+              <span class="text-sky-700 font-bold block text-sm">Inductive Mnemonic</span>
+              <strong>E</strong>MF leads <strong>L</strong> (Inductor) current <strong>I</strong>. Voltage peaks 90°
+              ahead of current flow.
+            </div>
+          </div>
+
+          <div
+            class="apple-notif-card !max-w-none border-purple-300/70 p-5 rounded-2xl flex items-center gap-4 shadow-md">
+            <div
+              class="text-3xl font-mono font-extrabold text-purple-700 bg-purple-500/15 p-4 rounded-xl border border-purple-500/30 shadow-sm">
+              ICE
+            </div>
+            <div class="text-xs text-[#515154] leading-relaxed font-mono">
+              <span class="text-purple-700 font-bold block text-sm">Capacitive Mnemonic</span>
+              Current <strong>I</strong> leads <strong>C</strong> (Capacitor) <strong>E</strong>MF. Charge movement
+              leads terminal voltage by 90°.
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Presentation Info -->
+        <footer
+          class="pt-10 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 font-mono gap-4">
+          <div>
+            Electrical Engineering Presentation • RLC 3D Interactive Web Experience
+          </div>
+          <div class="flex items-center gap-4">
+            <button data-jump="hero" class="text-sky-600 hover:text-sky-800 font-bold hover:underline transition">↑ Back
+              to Top</button>
+          </div>
+        </footer>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>
