@@ -117,11 +117,12 @@ class FrameSequenceCanvasViewer {
 
   initCanvasSize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.width = window.innerWidth;
-    this.height = window.innerHeight;
+    const parent = this.canvas.parentElement;
+    this.width = parent ? parent.clientWidth : window.innerWidth;
+    this.height = parent ? parent.clientHeight : window.innerHeight;
 
-    this.canvas.width = this.width * dpr;
-    this.canvas.height = this.height * dpr;
+    this.canvas.width = Math.round(this.width * dpr);
+    this.canvas.height = Math.round(this.height * dpr);
     this.canvas.style.width = `${this.width}px`;
     this.canvas.style.height = `${this.height}px`;
 
@@ -130,28 +131,72 @@ class FrameSequenceCanvasViewer {
   }
 
   setupListeners() {
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+
     window.addEventListener('resize', () => {
-      this.initCanvasSize();
-      if (this.lastRenderedFrame >= 0) {
-        this.renderFrame(this.lastRenderedFrame);
+      // Avoid re-measuring on tiny mobile address bar collapse/expand
+      if (window.innerWidth !== lastWidth || Math.abs(window.innerHeight - lastHeight) > 80) {
+        lastWidth = window.innerWidth;
+        lastHeight = window.innerHeight;
+        this.initCanvasSize();
+        if (this.lastRenderedFrame >= 0) {
+          this.renderFrame(this.lastRenderedFrame);
+        }
       }
     });
 
+    const updateSpotlight = (x, y) => {
+      if (!this.spotlight) return;
+      const rect = this.canvas.getBoundingClientRect();
+      this.spotlight.style.left = `${x - rect.left}px`;
+      this.spotlight.style.top = `${y - rect.top}px`;
+    };
+
     if (this.spotlight) {
-      window.addEventListener('mousemove', (e) => {
-        const rect = this.canvas.getBoundingClientRect();
-        this.spotlight.style.left = `${e.clientX - rect.left}px`;
-        this.spotlight.style.top = `${e.clientY - rect.top}px`;
-      });
+      window.addEventListener('mousemove', (e) => updateSpotlight(e.clientX, e.clientY));
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) {
+          updateSpotlight(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
     }
+
+    // Touch swipe support for direct 360° interactive rotation on mobile screens
+    let touchStartX = 0;
+    let frameOnTouchStart = 0;
+    let isTouchDragging = false;
+
+    this.canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        frameOnTouchStart = this.targetFrame;
+        isTouchDragging = true;
+      }
+    }, { passive: true });
+
+    this.canvas.addEventListener('touchmove', (e) => {
+      if (!isTouchDragging || e.touches.length !== 1) return;
+      const deltaX = e.touches[0].clientX - touchStartX;
+      const sensitivity = (this.frameCount * 0.75) / Math.max(this.width, 320);
+      const frameDelta = -deltaX * sensitivity;
+      this.targetFrame = Math.max(0, Math.min(this.frameCount - 1, frameOnTouchStart + frameDelta));
+    }, { passive: true });
+
+    this.canvas.addEventListener('touchend', () => {
+      isTouchDragging = false;
+    }, { passive: true });
   }
 
   setupScrollTrigger() {
+    const isMobile = window.innerWidth < 768;
+    const distance = isMobile ? (this.config.pinDistanceMobile || 1500) : (this.config.pinDistance || 2600);
+
     ScrollTrigger.create({
       trigger: this.config.trackId,
       pin: this.config.stageId,
       start: 'top top',
-      end: `+=${this.config.pinDistance || 2600}`,
+      end: `+=${distance}`,
       pinSpacing: true,
       scrub: 0.1,
       anticipatePin: 1,
@@ -216,12 +261,17 @@ class FrameSequenceCanvasViewer {
     const cAspect = cw / ch;
 
     let dw, dh, dx, dy;
-    if (cAspect > sAspect) {
+    if (cAspect < sAspect) {
+      // Screen is narrower/taller than 16:9 video frame (Mobile portrait, tablets, etc.)
+      // FIT FULL WIDTH: Never crop or cut off left and right sides!
+      // All component labels, lead wires, and data boxes remain 100% visible.
       dw = cw;
       dh = cw / sAspect;
       dx = 0;
       dy = (ch - dh) / 2;
     } else {
+      // Screen is wider than or equal to 16:9 video frame (Desktop landscape)
+      // Fit full height for immersive presentation
       dh = ch;
       dw = ch * sAspect;
       dx = (cw - dw) / 2;
@@ -244,6 +294,7 @@ function setupHardwareCanvasStages() {
     folder: 'resistor',
     frameCount: 192,
     pinDistance: 2600,
+    pinDistanceMobile: 1500,
   });
 
   // Component 2: Inductor (192 frames)
@@ -255,6 +306,7 @@ function setupHardwareCanvasStages() {
     folder: 'inductor',
     frameCount: 192,
     pinDistance: 2600,
+    pinDistanceMobile: 1500,
   });
 
   // Component 3: Capacitor (240 frames)
@@ -266,6 +318,7 @@ function setupHardwareCanvasStages() {
     folder: 'capacitor',
     frameCount: 240,
     pinDistance: 2600,
+    pinDistanceMobile: 1600,
   });
 }
 

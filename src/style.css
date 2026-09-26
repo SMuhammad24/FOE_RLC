@@ -76,8 +76,16 @@ body {
     0 4px 12px -2px rgba(0, 0, 0, 0.03),
     inset 0 1px 0 rgba(255, 255, 255, 0.95);
   min-width: 0;
+  max-width: 100%;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   user-select: none;
+}
+
+@media (max-width: 640px) {
+  .apple-notif-card {
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
 }
 
 .hud-marker .apple-notif-card {
@@ -171,9 +179,11 @@ body {
 /* Full-Screen Hardware Canvas Stage */
 .fullscreen-stage {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
+  height: 100dvh;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background: radial-gradient(circle at 50% 45%, #eff7fd 0%, #ddebfa 100%);
 }
@@ -185,6 +195,7 @@ body {
   height: 100%;
   display: block;
   z-index: 1;
+  touch-action: pan-y;
 }
 
 /* Seamless Studio Light Edge Vignette */
@@ -208,6 +219,13 @@ body {
   transform: translate(-50%, -50%);
   background: radial-gradient(circle, rgba(14, 165, 233, 0.16) 0%, transparent 65%);
   transition: opacity 0.5s ease;
+}
+
+@media (max-width: 640px) {
+  .spotlight-flare {
+    width: 320px;
+    height: 320px;
+  }
 }
 
 /* HUD Leader Markers & Pointer Dots */
