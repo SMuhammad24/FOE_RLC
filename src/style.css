@@ -411,14 +411,121 @@ input[type="range"]::-webkit-slider-thumb:hover {
   box-shadow: 0 14px 30px -4px rgba(2, 132, 199, 0.12), inset 0 1px 0 #ffffff;
 }
 
+/* Comprehensive Mobile & Touch Responsiveness Enhancements */
+@media (max-width: 1024px) {
+  body {
+    padding-bottom: 80px; /* Space for floating mobile dock */
+  }
+}
+
+@media (max-width: 640px) {
+  /* Prevent double tap zoom delays & tap highlight */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  button, select, input, a {
+    touch-action: manipulation;
+  }
+
+  /* Touch-friendly range sliders on phones */
+  input[type="range"] {
+    height: 10px;
+    margin: 8px 0;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Prevent iOS zoom on input/select */
+  select {
+    font-size: 14px !important;
+    min-height: 44px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  /* Pinned 3D stage responsive padding in portrait */
+  .fullscreen-stage {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  /* Sticky first column on mobile comparison table */
+  .sticky-col-header {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+    background: rgba(248, 250, 252, 0.96) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(203, 213, 225, 0.8);
+  }
+
+  .sticky-col-cell {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-right: 1px solid rgba(203, 213, 225, 0.8);
+    box-shadow: 4px 0 10px -2px rgba(0, 0, 0, 0.06);
+  }
+}
+
+/* Active Navigation Indicators */
+.mobile-nav-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-nav-btn.is-active {
+  background: rgba(15, 23, 42, 0.92) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.28);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.mobile-nav-btn.is-active span {
+  color: #ffffff !important;
+}
+
+.desktop-nav-btn.is-active {
+  background: rgba(2, 132, 199, 0.14) !important;
+  color: #0284c7 !important;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(2, 132, 199, 0.25);
+}
+
+/* Scroll Offset for Top Header */
+section[id], [id^="track-"], [id^="slide-"], #academic-credits {
+  scroll-margin-top: 72px;
+}
+
+/* Safe Area Inset Support for Modern Mobile Browsers */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  @media (max-width: 1024px) {
+    body {
+      padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    }
+    aside[aria-label="Mobile Navigation"] {
+      bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+  }
+}
+
 /* Print Styles for Formula Summary Cheat Sheet */
 @media print {
-  header, #hero, #track-resistor, #track-inductor, #track-capacitor, .fullscreen-stage {
+  header, #hero, #track-resistor, #track-inductor, #track-capacitor, .fullscreen-stage, aside[aria-label="Mobile Navigation"] {
     display: none !important;
   }
   body, main {
     background: #ffffff !important;
     color: #000000 !important;
+    padding-bottom: 0 !important;
   }
   .apple-notif-card, .apple-table-container, .apple-stat-card {
     box-shadow: none !important;
@@ -426,4 +533,6 @@ input[type="range"]::-webkit-slider-thumb:hover {
     break-inside: avoid;
   }
 }
+
+
 

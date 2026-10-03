@@ -903,6 +903,46 @@ function setupNavigation() {
     });
   });
 
+  // Track active section to update mobile floating dock & desktop nav indicators
+  const navGroups = [
+    { key: 'hero', ids: ['hero'] },
+    { key: 'track-resistor', ids: ['track-resistor', 'slide-resistor'] },
+    { key: 'track-inductor', ids: ['track-inductor', 'slide-inductor'] },
+    { key: 'track-capacitor', ids: ['track-capacitor', 'slide-capacitor'] },
+    { key: 'slide-summary', ids: ['slide-summary', 'academic-credits'] }
+  ];
+
+  const updateActiveNav = () => {
+    const scrollPos = window.scrollY + Math.min(window.innerHeight * 0.4, 300);
+    let activeKey = 'hero';
+
+    for (const group of navGroups) {
+      for (const id of group.ids) {
+        const el = document.getElementById(id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            activeKey = group.key;
+            break;
+          }
+        }
+      }
+    }
+
+    document.querySelectorAll('.mobile-nav-btn, .desktop-nav-btn').forEach((btn) => {
+      const target = btn.getAttribute('data-jump');
+      if (target === activeKey) {
+        btn.classList.add('is-active');
+      } else {
+        btn.classList.remove('is-active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  updateActiveNav();
+
   window.addEventListener('keydown', (e) => {
     // Do not interfere if user is focusing a range slider, input or textarea
     if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>RLC 3D Presentation — Fundamental of Electronics (FOE • Code: 3110016) | Resistor, Inductor, Capacitor</title>
   <meta name="description"
     content="Interactive full-screen scroll-bound 3D hardware presentation for Fundamental of Electronics (FOE • Code: 3110016): Resistor, Inductor, and Capacitor." />
@@ -34,15 +34,15 @@
     <!-- Center: Section Navigation Jump Links -->
     <nav class="hidden lg:flex items-center gap-1.5 apple-notif-pill px-3 py-1.5 border border-sky-200/60 shadow-sm">
       <button data-jump="hero"
-        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Overview</button>
+        class="desktop-nav-btn px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Overview</button>
       <button data-jump="track-resistor"
-        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-amber-700 hover:bg-amber-50 rounded-full transition">Resistor</button>
+        class="desktop-nav-btn px-3 py-1 text-xs font-semibold text-slate-700 hover:text-amber-700 hover:bg-amber-50 rounded-full transition">Resistor</button>
       <button data-jump="track-inductor"
-        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Inductor</button>
+        class="desktop-nav-btn px-3 py-1 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-sky-50 rounded-full transition">Inductor</button>
       <button data-jump="track-capacitor"
-        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-purple-700 hover:bg-purple-50 rounded-full transition">Capacitor</button>
+        class="desktop-nav-btn px-3 py-1 text-xs font-semibold text-slate-700 hover:text-purple-700 hover:bg-purple-50 rounded-full transition">Capacitor</button>
       <button data-jump="slide-summary"
-        class="px-3 py-1 text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition">RLC
+        class="desktop-nav-btn px-3 py-1 text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-emerald-50 rounded-full transition">RLC
         Matrix</button>
     </nav>
 
@@ -1228,7 +1228,7 @@
             <thead>
               <tr
                 class="border-b border-slate-200/80 bg-white/40 backdrop-blur font-mono text-xs uppercase text-slate-700">
-                <th class="p-4 font-bold">Parameter</th>
+                <th class="p-4 font-bold sticky-col-header">Parameter</th>
                 <th class="p-4 font-bold text-amber-700">Resistor (R)</th>
                 <th class="p-4 font-bold text-sky-700">Inductor (L)</th>
                 <th class="p-4 font-bold text-purple-700">Capacitor (C)</th>
@@ -1236,37 +1236,37 @@
             </thead>
             <tbody class="divide-y divide-slate-200/60 text-slate-700">
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Standard SI Unit</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">Standard SI Unit</td>
                 <td class="p-4 font-mono text-amber-700">Ohm (Ω)</td>
                 <td class="p-4 font-mono text-sky-700">Henry (H)</td>
                 <td class="p-4 font-mono text-purple-700">Farad (F)</td>
               </tr>
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Governing Differential Law</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">Governing Differential Law</td>
                 <td class="p-4 font-mono text-amber-700 text-xs">v(t) = R · i(t)</td>
                 <td class="p-4 font-mono text-sky-700 text-xs">v(t) = L · (di / dt)</td>
                 <td class="p-4 font-mono text-purple-700 text-xs">i(t) = C · (dv / dt)</td>
               </tr>
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Impedance Z(jω)</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">Impedance Z(jω)</td>
                 <td class="p-4 font-mono text-amber-700">Z = R</td>
                 <td class="p-4 font-mono text-sky-700">Z = +jωL</td>
                 <td class="p-4 font-mono text-purple-700">Z = -j / (ωC)</td>
               </tr>
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">V - I AC Phase Shift</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">V - I AC Phase Shift</td>
                 <td class="p-4 text-slate-700 font-medium">φ = 0° (In Phase)</td>
                 <td class="p-4 text-sky-700 font-medium">Current lags Voltage by 90°</td>
                 <td class="p-4 text-purple-700 font-medium">Current leads Voltage by 90°</td>
               </tr>
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">Energy Mechanism</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">Energy Mechanism</td>
                 <td class="p-4 text-slate-600 font-medium">Dissipated irreversible heat (Joule)</td>
                 <td class="p-4 text-sky-700 font-medium">Stored in Magnetic B-Field (½LI²)</td>
                 <td class="p-4 text-purple-700 font-medium">Stored in Electrostatic E-Field (½CV²)</td>
               </tr>
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">DC Steady-State (f = 0)</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">DC Steady-State (f = 0)</td>
                 <td class="p-4 text-slate-700 font-medium">Constant Resistance (R)</td>
                 <td class="p-4">
                   <span
@@ -1280,7 +1280,7 @@
                 </td>
               </tr>
               <tr class="hover:bg-slate-50/50 transition">
-                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs">High Frequency (f → ∞)</td>
+                <td class="p-4 font-semibold text-[#1d1d1f] font-mono text-xs sticky-col-cell">High Frequency (f → ∞)</td>
                 <td class="p-4 text-slate-700 font-medium">Parasitics emerge</td>
                 <td class="p-4">
                   <span
@@ -1486,6 +1486,32 @@
     </section>
 
   </main>
+
+  <!-- Floating Mobile Apple Navigation Dock (Visible on Mobile/Tablets < 1024px) -->
+  <aside aria-label="Mobile Navigation" class="fixed bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-50 lg:hidden w-[95%] max-w-sm pointer-events-none">
+    <nav class="pointer-events-auto flex items-center justify-around apple-notif-pill px-2 py-1.5 border border-sky-300/80 bg-white/85 backdrop-blur-xl shadow-[0_12px_36px_rgba(2,132,199,0.22)]">
+      <button data-jump="hero" class="mobile-nav-btn px-2.5 py-1 text-slate-700 hover:text-sky-700 active:scale-90 rounded-xl transition flex flex-col items-center">
+        <span class="text-sm">⚡</span>
+        <span class="text-[9px] font-mono font-bold">Home</span>
+      </button>
+      <button data-jump="track-resistor" class="mobile-nav-btn px-2.5 py-1 text-slate-700 hover:text-amber-700 active:scale-90 rounded-xl transition flex flex-col items-center">
+        <span class="text-sm">🟧</span>
+        <span class="text-[9px] font-mono font-bold">Resistor</span>
+      </button>
+      <button data-jump="track-inductor" class="mobile-nav-btn px-2.5 py-1 text-slate-700 hover:text-sky-700 active:scale-90 rounded-xl transition flex flex-col items-center">
+        <span class="text-sm">🌀</span>
+        <span class="text-[9px] font-mono font-bold">Inductor</span>
+      </button>
+      <button data-jump="track-capacitor" class="mobile-nav-btn px-2.5 py-1 text-slate-700 hover:text-purple-700 active:scale-90 rounded-xl transition flex flex-col items-center">
+        <span class="text-sm">🔋</span>
+        <span class="text-[9px] font-mono font-bold">Capacitor</span>
+      </button>
+      <button data-jump="slide-summary" class="mobile-nav-btn px-2.5 py-1 text-slate-700 hover:text-emerald-700 active:scale-90 rounded-xl transition flex flex-col items-center">
+        <span class="text-sm">📊</span>
+        <span class="text-[9px] font-mono font-bold">Matrix</span>
+      </button>
+    </nav>
+  </aside>
 
   <script type="module" src="/src/main.js"></script>
 </body>
