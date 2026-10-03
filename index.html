@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RLC Components — Interactive 3D Presentation | Resistor, Inductor, Capacitor</title>
+  <title>RLC 3D Presentation — Fundamental of Electronics (FOE • Code: 3110016) | Resistor, Inductor, Capacitor</title>
   <meta name="description"
-    content="Interactive full-screen scroll-bound 3D hardware presentation for electrical engineering: Resistor, Inductor, and Capacitor." />
+    content="Interactive full-screen scroll-bound 3D hardware presentation for Fundamental of Electronics (FOE • Code: 3110016): Resistor, Inductor, and Capacitor." />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,8 +23,11 @@
     class="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between pointer-events-auto backdrop-blur-md bg-white/60 border-b border-sky-200/60 shadow-[0_4px_20px_-4px_rgba(2,132,199,0.06)]">
     <div class="flex items-center gap-2 sm:gap-3 apple-notif-pill px-3 py-1.5 border border-sky-200/60 shadow-sm shrink-0">
       <div class="flex flex-col">
-        <span class="font-mono text-xs uppercase tracking-wider text-[#0f172a] font-bold"><span class="hidden sm:inline">RLC 3D Presentation</span><span class="sm:hidden">RLC 3D</span></span>
-        <span class="text-[10px] text-slate-500 font-mono hidden md:inline">Fundamentals of Electrical Engineering</span>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs uppercase tracking-wider text-[#0f172a] font-bold"><span class="hidden sm:inline">RLC 3D Presentation</span><span class="sm:hidden">RLC 3D</span></span>
+          <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-sky-100 text-sky-800 border border-sky-300">Code: <span class="credit-subject-code">3110016</span></span>
+        </div>
+        <span class="text-[10px] text-slate-600 font-mono hidden md:inline">Fundamental of Electronics (FOE)</span>
       </div>
     </div>
 
@@ -82,7 +85,9 @@
       <div
         class="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full apple-notif-pill border border-sky-500/25 text-sky-700 text-[11px] sm:text-xs font-mono mb-6 uppercase tracking-wider bg-sky-50/60 shadow-sm max-w-full">
         <div class="w-2 h-2 rounded-full bg-sky-500 animate-pulse shrink-0"></div>
-        <span class="truncate">Engineering Presentation</span>
+        <span class="truncate font-semibold">Fundamental of Electronics (FOE)</span>
+        <span class="text-slate-400 hidden sm:inline">•</span>
+        <span class="hidden sm:inline bg-sky-100/90 text-sky-800 font-bold px-2 py-0.5 rounded-full border border-sky-200">Subject Code: <span class="credit-subject-code">3110016</span></span>
         <span class="text-slate-400 hidden sm:inline">•</span>
         <span class="hidden sm:inline">Interactive 3D Hardware Anatomy</span>
       </div>
@@ -95,8 +100,7 @@
       </h1>
 
       <p class="mt-4 sm:mt-6 text-[#515154] max-w-2xl text-sm sm:text-lg leading-relaxed px-2">
-        An interactive, scroll-bound physical dissection of the three cornerstone passive elements of electrical
-        engineering:
+        An interactive, scroll-bound physical dissection of the three cornerstone passive elements of <strong>Fundamental of Electronics (FOE • Code: <span class="credit-subject-code">3110016</span>)</strong>:
         <span class="text-amber-600 font-bold">Resistor</span>,
         <span class="text-sky-600 font-bold">Inductor</span>, and
         <span class="text-purple-600 font-bold">Capacitor</span>.
@@ -142,7 +146,7 @@
             <span class="apple-notif-time">DISSECT</span>
           </div>
           <h3 class="apple-notif-title text-base group-hover:text-purple-700 transition">Electrolytic Capacitor</h3>
-          <p class="apple-notif-desc">Scroll locks as aluminum sleeve slides open to reveal tightly wound dielectric
+          <p class="apple-notif-desc">Scroll locks as aluminum casing slides open to reveal tightly wound dielectric
             foils unrolling.</p>
           <div class="mt-3 text-xs font-mono text-purple-600 flex items-center gap-1 font-semibold">
             <span>Scroll to Deconstruct</span> →
@@ -278,28 +282,62 @@
             </div>
           </div>
 
-          <!-- Resistor Construction Points as Apple Notification Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+          <!-- Resistor Construction & Internal Cut-Out Anatomy Cards -->
+          <div class="space-y-3 pt-1">
+            <div class="apple-notif-card !max-w-none border-amber-500/30 p-4 bg-amber-500/5">
               <div class="apple-notif-header">
                 <div class="apple-notif-app">
-                  <span class="apple-app-name text-sky-600">Helical Grooving</span>
+                  <span class="apple-app-name text-amber-700 font-bold">Resistor Cut-Out Anatomy • Helix Grooving</span>
                 </div>
-                <span class="apple-notif-time">SPEC</span>
+                <span class="apple-notif-time text-amber-700 font-bold">KEY CORRECTION</span>
               </div>
-              <div class="apple-notif-desc">Precision laser cutting forms a spiral resistive carbon track. Pitch
-                controls overall resistance value.</div>
+              <p class="text-xs text-[#515154] leading-relaxed">
+                In a carbon film resistor cut-out, the ceramic core is coated with a microscopic layer of pyrolytic carbon. 
+                A precision <strong>Helix Cut (Spiral Laser Groove)</strong> is cut through the carbon film down to the ceramic core.
+                Adjusting the <strong>pitch of the helix cut</strong> increases the effective length of the resistive path (<span class="font-mono text-amber-800 font-bold">R = ρ · L / A</span>), accurately calibrating the resistor from 1 Ω to 10 MΩ.
+              </p>
             </div>
 
-            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-slate-600">Ceramic Core</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="apple-notif-card !max-w-none border-sky-400/30 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-sky-600">01 / Helix Spiral Cut</span>
+                  </div>
+                  <span class="apple-notif-time">LASER TRIM</span>
                 </div>
-                <span class="apple-notif-time">SPEC</span>
+                <div class="apple-notif-desc">Precision spiral groove cut through carbon film; tighter pitch multiplies path length and raises resistance value.</div>
               </div>
-              <div class="apple-notif-desc">High alumina ceramic rod provides supreme thermal conductivity and
-                structural rigidity under heavy load.</div>
+
+              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-slate-600">02 / Ceramic Alumina Core</span>
+                  </div>
+                  <span class="apple-notif-time">SUBSTRATE</span>
+                </div>
+                <div class="apple-notif-desc">Solid 95%+ Al₂O₃ alumina ceramic rod provides supreme thermal stability, insulation, and mechanical rigidity.</div>
+              </div>
+
+              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-slate-600">03 / Pyrolytic Carbon Film</span>
+                  </div>
+                  <span class="apple-notif-time">RESISTIVE FILM</span>
+                </div>
+                <div class="apple-notif-desc">Uniform microscopic carbon layer deposited via hydrocarbon vapor cracking at 1000°C over the ceramic body.</div>
+              </div>
+
+              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-amber-600">04 / Nickel Caps & Leads</span>
+                  </div>
+                  <span class="apple-notif-time">TERMINALS</span>
+                </div>
+                <div class="apple-notif-desc">Nickel-plated steel end caps crimped to the film with tinned copper axial lead wires for solderability.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -417,7 +455,7 @@
                 <div id="band-strip-1" class="resistor-band-strip left-12 bg-amber-800" title="Band 1"></div>
                 <div id="band-strip-2" class="resistor-band-strip left-24 bg-black" title="Band 2"></div>
                 <div id="band-strip-3" class="resistor-band-strip left-36 bg-red-600" title="Multiplier"></div>
-                <div id="band-strip-4" class="resistor-band-strip right-12 bg-yellow-500" title="Tolerance"></div>
+                <div id="band-strip-4" class="resistor-band-strip right-12 bg-[#ca8a04]" title="Tolerance (Gold ±5%)"></div>
               </div>
               <!-- Right Lead Wire -->
               <div class="resistor-graphic-lead -right-8"></div>
@@ -434,7 +472,7 @@
                 <option value="2">Red (2)</option>
                 <option value="3">Orange (3)</option>
                 <option value="4">Yellow (4)</option>
-                <option value="5">Green (5)</option>
+                <option value="5">Green (5) 🟢</option>
                 <option value="6">Blue (6)</option>
                 <option value="7">Violet (7)</option>
                 <option value="8">Gray (8)</option>
@@ -451,7 +489,7 @@
                 <option value="2">Red (2)</option>
                 <option value="3">Orange (3)</option>
                 <option value="4">Yellow (4)</option>
-                <option value="5">Green (5)</option>
+                <option value="5">Green (5) 🟢</option>
                 <option value="6">Blue (6)</option>
                 <option value="7">Violet (7)</option>
                 <option value="8">Gray (8)</option>
@@ -468,7 +506,7 @@
                 <option value="100" selected>Red (×100 Ω)</option>
                 <option value="1000">Orange (×1 kΩ)</option>
                 <option value="10000">Yellow (×10 kΩ)</option>
-                <option value="100000">Green (×100 kΩ)</option>
+                <option value="100000">Green (×100 kΩ) 🟢</option>
                 <option value="1000000">Blue (×1 MΩ)</option>
                 <option value="0.1">Gold (×0.1 Ω)</option>
                 <option value="0.01">Silver (×0.01 Ω)</option>
@@ -485,6 +523,83 @@
                 <option value="2">Red (±2%)</option>
               </select>
             </div>
+          </div>
+
+          <!-- EIA Color Code Standard Reference Strip & Verification Bar -->
+          <div class="mt-6 pt-4 border-t border-slate-200/60">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs font-mono font-bold uppercase tracking-wider text-slate-700">EIA-RS-272 Standard Color Code Verification</span>
+              </div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold">Green (5) Verified: Pure Emerald #16a34a (Not Yellow)</span>
+            </div>
+
+            <!-- Interactive Color Swatches Row -->
+            <div class="grid grid-cols-6 sm:grid-cols-12 gap-1.5 text-center font-mono text-[10px]">
+              <button data-pick-digit="0" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#171717] block"></span>
+                <span class="font-bold text-slate-800">0</span>
+                <span class="text-[8px] text-slate-500">BLK</span>
+              </button>
+              <button data-pick-digit="1" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#854d0e] block"></span>
+                <span class="font-bold text-slate-800">1</span>
+                <span class="text-[8px] text-slate-500">BRN</span>
+              </button>
+              <button data-pick-digit="2" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#dc2626] block"></span>
+                <span class="font-bold text-slate-800">2</span>
+                <span class="text-[8px] text-slate-500">RED</span>
+              </button>
+              <button data-pick-digit="3" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#ea580c] block"></span>
+                <span class="font-bold text-slate-800">3</span>
+                <span class="text-[8px] text-slate-500">ORG</span>
+              </button>
+              <button data-pick-digit="4" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#eab308] block"></span>
+                <span class="font-bold text-slate-800">4</span>
+                <span class="text-[8px] text-slate-500">YEL</span>
+              </button>
+              <!-- GREEN HIGHLIGHTED -->
+              <button data-pick-digit="5" class="p-1.5 rounded-lg border-2 border-emerald-500 bg-emerald-50/80 hover:scale-105 transition flex flex-col items-center ring-2 ring-emerald-400/40 shadow-sm" title="Click to Test Green Band">
+                <span class="w-full h-4 rounded mb-1 bg-[#16a34a] block shadow-inner"></span>
+                <span class="font-bold text-emerald-800">5</span>
+                <span class="text-[8px] font-bold text-emerald-700">GRN ✓</span>
+              </button>
+              <button data-pick-digit="6" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#2563eb] block"></span>
+                <span class="font-bold text-slate-800">6</span>
+                <span class="text-[8px] text-slate-500">BLU</span>
+              </button>
+              <button data-pick-digit="7" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#9333ea] block"></span>
+                <span class="font-bold text-slate-800">7</span>
+                <span class="text-[8px] text-slate-500">VIO</span>
+              </button>
+              <button data-pick-digit="8" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#64748b] block"></span>
+                <span class="font-bold text-slate-800">8</span>
+                <span class="text-[8px] text-slate-500">GRY</span>
+              </button>
+              <button data-pick-digit="9" class="p-1.5 rounded-lg border border-slate-200/80 hover:scale-105 transition flex flex-col items-center bg-white/60">
+                <span class="w-full h-4 rounded mb-1 bg-[#f8fafc] border border-slate-300 block"></span>
+                <span class="font-bold text-slate-800">9</span>
+                <span class="text-[8px] text-slate-500">WHT</span>
+              </button>
+              <div class="p-1.5 rounded-lg border border-amber-300 bg-amber-50/60 flex flex-col items-center">
+                <span class="w-full h-4 rounded mb-1 bg-[#ca8a04] block"></span>
+                <span class="font-bold text-amber-800">±5%</span>
+                <span class="text-[8px] text-amber-700">GOLD</span>
+              </div>
+              <div class="p-1.5 rounded-lg border border-slate-300 bg-slate-50/60 flex flex-col items-center">
+                <span class="w-full h-4 rounded mb-1 bg-[#94a3b8] block"></span>
+                <span class="font-bold text-slate-800">±10%</span>
+                <span class="text-[8px] text-slate-700">SLV</span>
+              </div>
+            </div>
+            <p class="text-[11px] font-mono text-slate-500 mt-2 text-center">Click any color swatch above (or select <strong>Green (5)</strong> in the dropdown) to preview on the resistor body.</p>
           </div>
         </div>
 
@@ -905,28 +1020,60 @@
             </div>
           </div>
 
-          <!-- Capacitor Construction Points as Apple Notification Cards -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+          <!-- Capacitor Construction & Anatomy Points (Featuring Aluminum CASING) -->
+          <div class="space-y-3 pt-1">
+            <div class="apple-notif-card !max-w-none border-purple-500/30 p-4 bg-purple-500/5">
               <div class="apple-notif-header">
                 <div class="apple-notif-app">
-                  <span class="apple-app-name text-purple-600">Anodized Al₂O₃</span>
+                  <span class="apple-app-name text-purple-700 font-bold">Capacitor Anatomy • Protective CASING</span>
                 </div>
-                <span class="apple-notif-time">NANO</span>
+                <span class="apple-notif-time text-purple-700 font-bold">SPECIFICATION</span>
               </div>
-              <div class="apple-notif-desc">Ultrathin molecular dielectric barrier layer (&lt; 100 nm) yielding extreme
-                capacitance density.</div>
+              <p class="text-xs text-[#515154] leading-relaxed">
+                The cylindrical exterior of an electrolytic capacitor is the <strong>Aluminum CASING (Can)</strong>. It hermetically seals the wound electrolyte foil roll against atmosphere, preventing moisture loss and evaporation. The top of the casing features an embossed <strong>safety pressure vent</strong> that cleanly pops under catastrophic overpressure rather than exploding.
+              </p>
             </div>
 
-            <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
-              <div class="apple-notif-header">
-                <div class="apple-notif-app">
-                  <span class="apple-app-name text-slate-600">Electrolyte Contact</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="apple-notif-card !max-w-none border-purple-500/30 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-purple-600">01 / Aluminum CASING</span>
+                  </div>
+                  <span class="apple-notif-time">CAN SHIELD</span>
                 </div>
-                <span class="apple-notif-time">IONIC</span>
+                <div class="apple-notif-desc">Impact-extruded aluminum casing with embossed safety vent scoring to prevent explosive rupture.</div>
               </div>
-              <div class="apple-notif-desc">Conductive liquid/gel electrolyte maintains atomic contact into microscopic
-                etched foil crevices.</div>
+
+              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-slate-600">02 / Anodized Al₂O₃ Foil</span>
+                  </div>
+                  <span class="apple-notif-time">DIELECTRIC</span>
+                </div>
+                <div class="apple-notif-desc">Etched high-purity aluminum anode foil with molecular aluminum oxide barrier layer (&lt; 100 nm).</div>
+              </div>
+
+              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-slate-600">03 / Electrolyte Paper</span>
+                  </div>
+                  <span class="apple-notif-time">SEPARATOR</span>
+                </div>
+                <div class="apple-notif-desc">Porous cellulose separator paper saturated with liquid electrolyte conducting ions between foils.</div>
+              </div>
+
+              <div class="apple-notif-card !max-w-none border-black/8 p-3.5">
+                <div class="apple-notif-header">
+                  <div class="apple-notif-app">
+                    <span class="apple-app-name text-purple-600">04 / Rubber Seal & Leads</span>
+                  </div>
+                  <span class="apple-notif-time">BASE BUNG</span>
+                </div>
+                <div class="apple-notif-desc">High-temp synthetic rubber base bung crimped into casing bottom, isolating polarized terminal pins.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -1272,11 +1419,62 @@
           </div>
         </div>
 
+        <!-- Academic Project Submission & Credits Card (Prepared By & Guided By) -->
+        <div class="apple-notif-card !max-w-none border-sky-300/70 p-6 sm:p-8 rounded-2xl shadow-lg space-y-6 mt-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/60 pb-4">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-500 animate-pulse"></span>
+              <h3 class="text-base sm:text-lg font-bold text-[#1d1d1f]">Academic Project Submission & Verification</h3>
+            </div>
+            <div class="inline-flex items-center gap-2 font-mono text-xs text-slate-600">
+              <span class="bg-sky-100 text-sky-800 font-bold px-2.5 py-1 rounded-full border border-sky-300">
+                Course: Fundamental of Electronics (FOE)
+              </span>
+              <button data-edit-credit="subject" title="Click to customize subject code" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] border border-slate-300 transition">
+                Code: <span class="credit-subject-code font-bold">3110016</span> ✏️
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- Prepared By Card -->
+            <div class="apple-stat-card border-amber-300/60 bg-amber-500/10 p-5 rounded-xl space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-800">PREPARED BY (STUDENT)</span>
+                <button data-edit-credit="student" class="text-[10px] font-mono text-amber-700 hover:underline font-bold">✏️ Edit Name</button>
+              </div>
+              <div>
+                <h4 class="text-xl font-extrabold text-[#1d1d1f] credit-student-name">Muhammad Sambhyana</h4>
+                <div class="text-xs text-slate-600 font-mono mt-1 flex items-center justify-between">
+                  <span class="credit-student-enroll">Enrollment: ECE/EE Engineering</span>
+                  <button data-edit-credit="enroll" class="text-[10px] text-slate-500 hover:underline">✏️</button>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-500">Student Presenter • Department of Electronics & Communication / Electrical Engineering</p>
+            </div>
+
+            <!-- Guided By Card -->
+            <div class="apple-stat-card border-sky-300/60 bg-sky-500/10 p-5 rounded-xl space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-sky-800">GUIDED BY (FACULTY / PROFESSOR)</span>
+                <button data-edit-credit="guide" class="text-[10px] font-mono text-sky-700 hover:underline font-bold">✏️ Edit Guide Name</button>
+              </div>
+              <div>
+                <h4 class="text-xl font-extrabold text-sky-900 credit-guide-name">Prof. Ujjval Buch</h4>
+                <div class="text-xs text-slate-600 font-mono mt-1">
+                  <span>Assistant Professor / Project Guide & Evaluator</span>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-500">Department of Fundamental Sciences & Electronics Engineering</p>
+            </div>
+          </div>
+        </div>
+
         <!-- Footer Presentation Info -->
         <footer
-          class="pt-10 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 font-mono gap-4">
+          class="pt-10 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-600 font-mono gap-4">
           <div>
-            Electrical Engineering Presentation • RLC 3D Interactive Web Experience
+            Fundamental of Electronics (FOE • Code: <span class="credit-subject-code font-bold">3110016</span>) • Prepared by: <span class="credit-student-name font-bold text-slate-800">Muhammad Sambhyana</span> • Guided by: <span class="credit-guide-name font-bold text-sky-800">Prof. Ujjval Buch</span>
           </div>
           <div class="flex items-center gap-4">
             <button data-jump="hero" class="text-sky-600 hover:text-sky-800 font-bold hover:underline transition">↑ Back

@@ -12,6 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
   setupResistorColorCode();
   setupRLCResonance();
   setupPresentationMode();
+  setupProjectCredits();
 
   // Ensure ScrollTrigger recalculates after fonts and layout settle
   if (document.fonts) {
@@ -567,26 +568,37 @@ function setupResistorColorCode() {
   const bandStrip3 = document.getElementById('band-strip-3');
   const bandStrip4 = document.getElementById('band-strip-4');
 
-  const colorStyles = {
+  const digitColorStyles = {
     '0': '#171717', // Black
     '1': '#854d0e', // Brown
     '2': '#dc2626', // Red
     '3': '#ea580c', // Orange
     '4': '#eab308', // Yellow
-    '5': '#16a34a', // Green
+    '5': '#16a34a', // Green (Crisp vibrant green - 100% verified!)
     '6': '#2563eb', // Blue
     '7': '#9333ea', // Violet
     '8': '#64748b', // Gray
     '9': '#f8fafc', // White
-    '10': '#854d0e', // Multiplier 10 (Brown)
-    '100': '#dc2626', // Multiplier 100 (Red)
-    '1000': '#ea580c', // Multiplier 1k (Orange)
-    '10000': '#eab308', // Multiplier 10k (Yellow)
-    '100000': '#16a34a', // Multiplier 100k (Green)
-    '1000000': '#2563eb', // Multiplier 1M (Blue)
-    '0.1': '#ca8a04', // Gold
-    '0.01': '#94a3b8', // Silver
-    '5': '#ca8a04', // Tol 5% Gold
+  };
+
+  const multiplierColorStyles = {
+    '1': '#171717', // Black (×1 Ω)
+    '10': '#854d0e', // Brown (×10 Ω)
+    '100': '#dc2626', // Red (×100 Ω)
+    '1000': '#ea580c', // Orange (×1 kΩ)
+    '10000': '#eab308', // Yellow (×10 kΩ)
+    '100000': '#16a34a', // Green (×100 kΩ - Vivid Green!)
+    '1000000': '#2563eb', // Blue (×1 MΩ)
+    '0.1': '#ca8a04', // Gold (×0.1 Ω)
+    '0.01': '#94a3b8', // Silver (×0.01 Ω)
+  };
+
+  const toleranceColorStyles = {
+    '5': '#ca8a04', // Gold (±5%)
+    '10': '#94a3b8', // Silver (±10%)
+    '1': '#854d0e', // Brown (±1%)
+    '2': '#dc2626', // Red (±2%)
+    '0.5': '#16a34a', // Green (±0.5%)
   };
 
   function updateColorCode() {
@@ -597,11 +609,11 @@ function setupResistorColorCode() {
     const mult = parseFloat(sel3.value);
     const tol = parseFloat(sel4.value);
 
-    // Update Band Colors
-    if (bandStrip1) bandStrip1.style.backgroundColor = colorStyles[String(d1)] || '#854d0e';
-    if (bandStrip2) bandStrip2.style.backgroundColor = colorStyles[String(d2)] || '#171717';
-    if (bandStrip3) bandStrip3.style.backgroundColor = colorStyles[String(mult)] || '#dc2626';
-    if (bandStrip4) bandStrip4.style.backgroundColor = colorStyles[String(tol)] || '#ca8a04';
+    // Update Band Colors with distinct dedicated color dictionaries
+    if (bandStrip1) bandStrip1.style.backgroundColor = digitColorStyles[String(d1)] || '#854d0e';
+    if (bandStrip2) bandStrip2.style.backgroundColor = digitColorStyles[String(d2)] || '#171717';
+    if (bandStrip3) bandStrip3.style.backgroundColor = multiplierColorStyles[String(mult)] || '#dc2626';
+    if (bandStrip4) bandStrip4.style.backgroundColor = toleranceColorStyles[String(tol)] || '#ca8a04';
 
     // Calculate value
     const val = (d1 * 10 + d2) * mult;
@@ -622,6 +634,19 @@ function setupResistorColorCode() {
   sel3?.addEventListener('change', updateColorCode);
   sel4?.addEventListener('change', updateColorCode);
   updateColorCode();
+
+  // Allow clicking on EIA color chart rows to quickly load any color (e.g. Green 5)
+  document.querySelectorAll('[data-pick-digit]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const digit = btn.getAttribute('data-pick-digit');
+      if (digit === '0') {
+        if (sel2) sel2.value = '0';
+      } else {
+        if (sel1) sel1.value = digit;
+      }
+      updateColorCode();
+    });
+  });
 }
 
 /* =========================================================================
@@ -915,4 +940,70 @@ function setupNavigation() {
       }
     }
   });
+}
+
+/* =========================================================================
+   8. ACADEMIC PROJECT CREDITS & VERIFICATION STATE
+   ========================================================================= */
+function setupProjectCredits() {
+  const defaultStudentName = 'Muhammad Sambhyana';
+  const defaultStudentEnroll = 'ECE/EE Engineering';
+  const defaultGuideName = 'Prof. Ujjval Buch';
+  const defaultSubjectCode = '3110016';
+
+  const studentNameEls = document.querySelectorAll('.credit-student-name');
+  const studentEnrollEls = document.querySelectorAll('.credit-student-enroll');
+  const guideNameEls = document.querySelectorAll('.credit-guide-name');
+  const subjectCodeEls = document.querySelectorAll('.credit-subject-code');
+
+  function loadCredits() {
+    const sName = localStorage.getItem('foe_student_name') || defaultStudentName;
+    const sEnroll = localStorage.getItem('foe_student_enroll') || defaultStudentEnroll;
+    const gName = localStorage.getItem('foe_guide_name') || defaultGuideName;
+    const sCode = localStorage.getItem('foe_sub_code') || defaultSubjectCode;
+
+    studentNameEls.forEach(el => el.textContent = sName);
+    studentEnrollEls.forEach(el => el.textContent = sEnroll);
+    guideNameEls.forEach(el => el.textContent = gName);
+    subjectCodeEls.forEach(el => el.textContent = sCode);
+  }
+
+  // Allow clicking on any credit badge to edit inline
+  document.querySelectorAll('[data-edit-credit]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const type = btn.getAttribute('data-edit-credit');
+      if (type === 'student') {
+        const cur = localStorage.getItem('foe_student_name') || defaultStudentName;
+        const res = prompt('Enter Student Name (Prepared By):', cur);
+        if (res && res.trim()) {
+          localStorage.setItem('foe_student_name', res.trim());
+          loadCredits();
+        }
+      } else if (type === 'enroll') {
+        const cur = localStorage.getItem('foe_student_enroll') || defaultStudentEnroll;
+        const res = prompt('Enter Enrollment / Roll Number:', cur);
+        if (res && res.trim()) {
+          localStorage.setItem('foe_student_enroll', res.trim());
+          loadCredits();
+        }
+      } else if (type === 'guide') {
+        const cur = localStorage.getItem('foe_guide_name') || defaultGuideName;
+        const res = prompt("Enter Faculty Guide's Name (Guided By):", cur);
+        if (res && res.trim()) {
+          localStorage.setItem('foe_guide_name', res.trim());
+          loadCredits();
+        }
+      } else if (type === 'subject') {
+        const cur = localStorage.getItem('foe_sub_code') || defaultSubjectCode;
+        const res = prompt('Enter Subject Code:', cur);
+        if (res && res.trim()) {
+          localStorage.setItem('foe_sub_code', res.trim());
+          loadCredits();
+        }
+      }
+    });
+  });
+
+  loadCredits();
 }

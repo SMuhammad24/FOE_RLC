@@ -19,19 +19,19 @@ export class ResistorModel {
     this.ceramicCore = new THREE.Mesh(coreGeo, ceramicMat);
     this.group.add(this.ceramicCore);
 
-    // Carbon Film Spiral Helix (Laser-trimmed resistive carbon track)
+    // Carbon Film Spiral Helix (Laser-trimmed resistive carbon track cut-out)
     const helixCurve = new THREE.Curve();
     helixCurve.getPoint = function (t) {
-      const turns = 7;
+      const turns = 8;
       const angle = t * Math.PI * 2 * turns;
-      const radius = 0.395;
-      const x = (t - 0.5) * 2.8;
+      const radius = 0.388; // Precision snug fit over alumina ceramic core (radius 0.38)
+      const x = (t - 0.5) * 2.75;
       const y = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius;
       return new THREE.Vector3(x, y, z);
     };
 
-    const helixGeo = new THREE.TubeGeometry(helixCurve, 180, 0.045, 12, false);
+    const helixGeo = new THREE.TubeGeometry(helixCurve, 240, 0.038, 12, false);
     const carbonMat = new THREE.MeshStandardMaterial({
       color: 0x18181b,
       roughness: 0.35,
